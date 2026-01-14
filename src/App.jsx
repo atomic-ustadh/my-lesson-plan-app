@@ -108,7 +108,38 @@ function App() {
         <div>
           <h1>Admin Dashboard</h1>
           <p>Viewing all teacher activity (Read-Only).</p>
-          <LessonList userId={session.user.id} isAdmin={true} />
+
+          {/* ADD THIS MODAL BLOCK FOR ADMINS TOO */}
+          {showForm && (
+            <div
+              style={{
+                position: "fixed",
+                top: "10%",
+                left: "10%",
+                right: "10%",
+                bottom: "10%",
+                background: "white",
+                padding: "30px",
+                boxShadow: "0 0 20px rgba(0,0,0,0.5)",
+                overflowY: "auto",
+                zIndex: 1000,
+              }}
+            >
+              <h2>VIEWING LESSON (Admin)</h2>
+              <LessonForm
+                userId={session.user.id}
+                initialData={selectedLesson}
+                mode="view" // Always "view" for admins
+                onClose={() => setShowForm(false)}
+              />
+            </div>
+          )}
+
+          <LessonList
+            userId={session.user.id}
+            isAdmin={true}
+            onAction={(lesson, m) => handleAction(lesson, "view")} // Force "view" mode
+          />
         </div>
       ) : (
         <div>
