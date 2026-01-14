@@ -28,7 +28,7 @@ export default function LessonList({
     >
       <thead>
         <tr style={{ background: "#f4f4f4" }}>
-          <th>Title</th>
+          <th>Week</th>
           <th>Subject</th>
           <th>Actions</th>
         </tr>
@@ -36,7 +36,7 @@ export default function LessonList({
       <tbody>
         {lessons.map((lesson) => (
           <tr key={lesson.id}>
-            <td>{lesson.title}</td>
+            <td>{lesson.content?.week}</td>
             <td>{lesson.subject}</td>
             <td>
               <button onClick={() => onAction(lesson, "view")}>View</button>

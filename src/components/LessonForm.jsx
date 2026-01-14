@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
-import { TEMPLATES } from "../templates";
 
 export default function LessonForm({
   userId,
@@ -10,40 +9,74 @@ export default function LessonForm({
   onClose,
 }) {
   const [formData, setFormData] = useState({
-    title: "",
     subject: "",
+    topic: "",
+    duration: "",
     grade: "",
+    period: "",
+    date: "",
+    age: "",
+    week: "",
+    introduction: "",
     objectives: "",
-    activities: "",
-    assessment: "",
+    summary: "",
+    methodology: "",
+    resources: "",
+    evaluation: "",
+    assignment: "",
+    teacherComment: "",
+    supervisorComment: "",
   });
 
-  // Sync form with initialData if editing/viewing/duplicating
+  const subjects = [
+    "Mathematics",
+    "English",
+    "Science",
+    "Social Studies",
+    "Art",
+    "Physical Education",
+    "Music",
+    "ICT",
+  ];
+  const classes = [
+    "Grade 1",
+    "Grade 2",
+    "Grade 3",
+    "Grade 4",
+    "Grade 5",
+    "Grade 6",
+    "JSS 1",
+    "JSS 2",
+    "JSS 3",
+    "SSS 1",
+    "SSS 2",
+    "SSS 3",
+  ];
+
   useEffect(() => {
     if (initialData) {
+      const c = initialData.content || {};
       setFormData({
-        title:
-          mode === "duplicate"
-            ? `${initialData.title} (Copy)`
-            : initialData.title,
         subject: initialData.subject || "",
+        topic: initialData.title || "",
+        duration: c.duration || "",
         grade: initialData.grade_level || "",
-        objectives: initialData.content?.objectives || "",
-        activities: initialData.content?.activities || "",
-        assessment: initialData.content?.assessment || "",
-      });
-    } else {
-      // RESET: Ensures the form is empty when clicking "+ Create New Plan"
-      setFormData({
-        title: "",
-        subject: "",
-        grade: "",
-        objectives: "",
-        activities: "",
-        assessment: "",
+        period: c.period || "",
+        date: c.date || "",
+        age: c.age || "",
+        week: c.week || "",
+        introduction: c.introduction || "",
+        objectives: c.objectives || "",
+        summary: c.summary || "",
+        methodology: c.methodology || "",
+        resources: c.resources || "",
+        evaluation: c.evaluation || "",
+        assignment: c.assignment || "",
+        teacherComment: c.teacherComment || "",
+        supervisorComment: c.supervisorComment || "",
       });
     }
-  }, [initialData, mode]);
+  }, [initialData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,13 +84,24 @@ export default function LessonForm({
 
     const payload = {
       user_id: userId,
-      title: formData.title,
       subject: formData.subject,
+      title: formData.topic,
       grade_level: formData.grade,
       content: {
+        duration: formData.duration,
+        period: formData.period,
+        date: formData.date,
+        age: formData.age,
+        week: formData.week,
+        introduction: formData.introduction,
         objectives: formData.objectives,
-        activities: formData.activities,
-        assessment: formData.assessment,
+        summary: formData.summary,
+        methodology: formData.methodology,
+        resources: formData.resources,
+        evaluation: formData.evaluation,
+        assignment: formData.assignment,
+        teacherComment: formData.teacherComment,
+        supervisorComment: formData.supervisorComment,
       },
     };
 
@@ -76,142 +120,290 @@ export default function LessonForm({
   };
 
   const isReadOnly = mode === "view";
-
-  // Shared style for inputs to keep code clean
   const inputStyle = {
-    padding: "8px",
-    marginBottom: "10px",
+    padding: "10px",
     borderRadius: "4px",
     border: "1px solid #ccc",
+    width: "100%",
   };
+  const labelStyle = {
+    fontWeight: "bold",
+    display: "block",
+    marginBottom: "5px",
+    marginTop: "15px",
+  };
+  const reqStyle = { color: "red", marginLeft: "4px" };
 
   return (
     <form
       onSubmit={handleSubmit}
-      style={{ display: "flex", flexDirection: "column", gap: "5px" }}
+      style={{ maxWidth: "900px", margin: "0 auto", paddingBottom: "50px" }}
     >
-      {/* 1. Template Selector (Only for new plans) */}
-      {!isReadOnly && mode !== "edit" && (
-        <div style={{ marginBottom: "15px" }}>
-          <label style={{ display: "block", fontWeight: "bold" }}>
-            Start with a Template:
+      {/* SECTION 1: Logistics */}
+      <div
+        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}
+      >
+        <div>
+          <label style={labelStyle}>
+            1. Subject <span style={reqStyle}>*</span>
           </label>
           <select
-            style={{ ...inputStyle, width: "100%" }}
-            onChange={(e) => {
-              const t = TEMPLATES[e.target.value];
-              if (t)
-                setFormData({
-                  ...formData,
-                  objectives: t.objectives,
-                  activities: t.activities,
-                  assessment: t.assessment,
-                });
-            }}
-          >
-            <option value="">-- Blank Slate --</option>
-            {Object.entries(TEMPLATES).map(([key, t]) => (
-              <option key={key} value={key}>
-                {t.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-
-      {/* 2. Basic Info Row */}
-      <label>Lesson Title *</label>
-      <input
-        disabled={isReadOnly}
-        style={inputStyle}
-        placeholder="e.g. Intro to Photosynthesis"
-        value={formData.title}
-        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-        required
-      />
-
-      <div style={{ display: "flex", gap: "10px" }}>
-        <div style={{ flex: 1 }}>
-          <label>Subject</label>
-          <input
             disabled={isReadOnly}
-            style={{ ...inputStyle, width: "100%" }}
-            placeholder="e.g. Science"
+            style={inputStyle}
             value={formData.subject}
             onChange={(e) =>
               setFormData({ ...formData, subject: e.target.value })
             }
-          />
-        </div>
-        <div style={{ flex: 1 }}>
-          <label>Grade Level</label>
+            required
+          >
+            <option value="">Select Subject</option>
+            {subjects.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+
+          <label style={labelStyle}>
+            2. Topic <span style={reqStyle}>*</span>
+          </label>
           <input
             disabled={isReadOnly}
-            style={{ ...inputStyle, width: "100%" }}
-            placeholder="e.g. 5th Grade"
+            style={inputStyle}
+            value={formData.topic}
+            onChange={(e) =>
+              setFormData({ ...formData, topic: e.target.value })
+            }
+            required
+          />
+
+          <label style={labelStyle}>
+            3. Duration <span style={reqStyle}>*</span>
+          </label>
+          <input
+            disabled={isReadOnly}
+            style={inputStyle}
+            placeholder="e.g. 40 mins"
+            value={formData.duration}
+            onChange={(e) =>
+              setFormData({ ...formData, duration: e.target.value })
+            }
+            required
+          />
+
+          <label style={labelStyle}>
+            4. Grade / Class <span style={reqStyle}>*</span>
+          </label>
+          <select
+            disabled={isReadOnly}
+            style={inputStyle}
             value={formData.grade}
             onChange={(e) =>
               setFormData({ ...formData, grade: e.target.value })
             }
+            required
+          >
+            <option value="">Select Class</option>
+            {classes.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label style={labelStyle}>
+            5. Period <span style={reqStyle}>*</span>
+          </label>
+          <input
+            disabled={isReadOnly}
+            style={inputStyle}
+            value={formData.period}
+            onChange={(e) =>
+              setFormData({ ...formData, period: e.target.value })
+            }
+            required
+          />
+
+          <label style={labelStyle}>
+            6. Date <span style={reqStyle}>*</span>
+          </label>
+          <input
+            type="date"
+            disabled={isReadOnly}
+            style={inputStyle}
+            value={formData.date}
+            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+            required
+          />
+
+          <label style={labelStyle}>
+            7. Average Age <span style={reqStyle}>*</span>
+          </label>
+          <input
+            type="number"
+            disabled={isReadOnly}
+            style={inputStyle}
+            value={formData.age}
+            onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+            required
+          />
+
+          <label style={labelStyle}>
+            8. Week <span style={reqStyle}>*</span>
+          </label>
+          <input
+            disabled={isReadOnly}
+            style={inputStyle}
+            value={formData.week}
+            onChange={(e) => setFormData({ ...formData, week: e.target.value })}
+            required
           />
         </div>
       </div>
 
-      {/* 3. Detailed Content */}
-      <label>Learning Objectives</label>
+      <hr style={{ margin: "30px 0" }} />
+
+      {/* SECTION 2: Instructional Content */}
+      <label style={labelStyle}>
+        9. Introduction <span style={reqStyle}>*</span>
+      </label>
+      <input
+        disabled={isReadOnly}
+        style={inputStyle}
+        value={formData.introduction}
+        onChange={(e) =>
+          setFormData({ ...formData, introduction: e.target.value })
+        }
+        required
+      />
+
+      <label style={labelStyle}>
+        10. Objectives <span style={reqStyle}>*</span>
+      </label>
       <textarea
         disabled={isReadOnly}
-        style={{ ...inputStyle, minHeight: "60px" }}
-        placeholder="What will students learn?"
+        style={{ ...inputStyle, minHeight: "80px" }}
         value={formData.objectives}
         onChange={(e) =>
           setFormData({ ...formData, objectives: e.target.value })
         }
+        required
       />
 
-      <label>Lesson Activities</label>
+      <label style={labelStyle}>
+        11. Summary / Content <span style={reqStyle}>*</span>
+      </label>
       <textarea
         disabled={isReadOnly}
-        style={{ ...inputStyle, minHeight: "120px" }}
-        placeholder="Step-by-step procedure..."
-        value={formData.activities}
+        style={{ ...inputStyle, minHeight: "150px" }}
+        value={formData.summary}
+        onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
+        required
+      />
+
+      <label style={labelStyle}>
+        12. Methodology <span style={reqStyle}>*</span>
+      </label>
+      <textarea
+        disabled={isReadOnly}
+        style={{ ...inputStyle, minHeight: "80px" }}
+        value={formData.methodology}
         onChange={(e) =>
-          setFormData({ ...formData, activities: e.target.value })
+          setFormData({ ...formData, methodology: e.target.value })
+        }
+        required
+      />
+
+      <label style={labelStyle}>
+        13. Instructional Resources <span style={reqStyle}>*</span>
+      </label>
+      <textarea
+        disabled={isReadOnly}
+        style={{ ...inputStyle, minHeight: "80px" }}
+        value={formData.resources}
+        onChange={(e) =>
+          setFormData({ ...formData, resources: e.target.value })
+        }
+        required
+      />
+
+      <label style={labelStyle}>
+        14. Evaluation <span style={reqStyle}>*</span>
+      </label>
+      <textarea
+        disabled={isReadOnly}
+        style={{ ...inputStyle, minHeight: "80px" }}
+        value={formData.evaluation}
+        onChange={(e) =>
+          setFormData({ ...formData, evaluation: e.target.value })
+        }
+        required
+      />
+
+      <label style={labelStyle}>15. Assignment (Optional)</label>
+      <textarea
+        disabled={isReadOnly}
+        style={{ ...inputStyle, minHeight: "80px" }}
+        value={formData.assignment}
+        onChange={(e) =>
+          setFormData({ ...formData, assignment: e.target.value })
         }
       />
 
-      <label>Assessment / Exit Ticket</label>
-      <textarea
+      <hr style={{ margin: "30px 0" }} />
+
+      {/* SECTION 3: Feedback (All Optional) */}
+      <label style={labelStyle}>16. Teacher's Comment</label>
+      <input
         disabled={isReadOnly}
-        style={{ ...inputStyle, minHeight: "60px" }}
-        placeholder="How will you check for understanding?"
-        value={formData.assessment}
+        style={inputStyle}
+        value={formData.teacherComment}
         onChange={(e) =>
-          setFormData({ ...formData, assessment: e.target.value })
+          setFormData({ ...formData, teacherComment: e.target.value })
         }
       />
 
-      {/* 4. Action Buttons */}
-      <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+      <label style={labelStyle}>17. Supervisor's Comment</label>
+      <input
+        disabled={isReadOnly}
+        style={inputStyle}
+        value={formData.supervisorComment}
+        onChange={(e) =>
+          setFormData({ ...formData, supervisorComment: e.target.value })
+        }
+      />
+
+      {/* FOOTER BUTTONS */}
+      <div style={{ marginTop: "30px", display: "flex", gap: "15px" }}>
         {!isReadOnly && (
           <button
             type="submit"
             style={{
-              backgroundColor: "green",
+              flex: 2,
+              padding: "15px",
+              background: "#28a745",
               color: "white",
-              padding: "10px 20px",
-              cursor: "pointer",
               border: "none",
-              borderRadius: "4px",
+              borderRadius: "5px",
+              cursor: "pointer",
+              fontWeight: "bold",
             }}
           >
-            {mode === "edit" ? "Update Lesson" : "Save Lesson"}
+            {mode === "edit" ? "Update Lesson Plan" : "Save Lesson Plan"}
           </button>
         )}
         <button
           type="button"
           onClick={onClose}
-          style={{ padding: "10px 20px", cursor: "pointer" }}
+          style={{
+            flex: 1,
+            padding: "15px",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+            cursor: "pointer",
+          }}
         >
           {isReadOnly ? "Close" : "Cancel"}
         </button>
