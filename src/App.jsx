@@ -13,10 +13,15 @@ function App() {
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const openForm = (lesson = null, currentMode = "create") => {
-    setSelectedLesson(lesson);
-    setMode(currentMode);
-    setShowForm(true);
+  const handleAction = (lesson, mode) => {
+    if (mode === "delete") {
+      handleDelete(lesson.id);
+    } else {
+      // This handles 'view', 'edit', and 'duplicate'
+      setSelectedLesson(lesson);
+      setMode(mode);
+      setShowForm(true);
+    }
   };
 
   useEffect(() => {
@@ -58,6 +63,26 @@ function App() {
   if (!session) {
     return <Login onLoginSuccess={(userRole) => setRole(userRole)} />;
   }
+
+  const handleDelete = async (lessonId) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this lesson plan? This cannot be undone."
+    );
+
+    if (confirmed) {
+      const { error } = await supabase
+        .from("lesson_plans")
+        .delete()
+        .eq("id", lessonId);
+
+      if (error) {
+        alert("Error deleting lesson: " + error.message);
+      } else {
+        // Refresh the list to show the lesson is gone
+        setRefreshKey((prev) => prev + 1);
+      }
+    }
+  };
 
   return (
     <div style={{ padding: "20px" }}>
@@ -124,7 +149,8 @@ function App() {
           <LessonList
             userId={session.user.id}
             refreshKey={refreshKey}
-            onAction={(lesson, m) => openForm(lesson, m)}
+            isAdmin={role === 'admin'}
+            onAction={(lesson, m) => handleAction(lesson, m)}
           />
         </div>
       )}
