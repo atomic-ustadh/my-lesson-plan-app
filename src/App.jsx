@@ -8,7 +8,7 @@ function App() {
   const [selectedLesson, setSelectedLesson] = useState(null);
   const [mode, setMode] = useState("create"); // create, edit, view, duplicate
   const [refreshKey, setRefreshKey] = useState(0); // Used to force-refresh the list
-  const [showForm, setShowForm] = useState(false); // Toggles the create form
+  const [currentView, setCurrentView] = useState("list"); // 'list' or 'form'
   const [session, setSession] = useState(null);
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,7 @@ function App() {
       // This handles 'view', 'edit', and 'duplicate'
       setSelectedLesson(lesson);
       setMode(mode);
-      setShowForm(true);
+      setCurrentView("form"); // Switch to the form page
     }
   };
 
@@ -85,117 +85,100 @@ function App() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
+      {/* NAVIGATION BAR (Always Visible) */}
       <nav
         style={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
+          paddingBottom: "20px",
+          borderBottom: "1px solid #eee",
         }}
       >
-        <span>
-          Logged in as: <strong>{role}</strong>
+        <span style={{ fontSize: "1.2rem" }}>
+          📝 <strong>LessonPlanner</strong>
         </span>
-        <button
-          onClick={async () => {
-            await supabase.auth.signOut();
-            setSession(null);
-            setRole(null);
-          }}
-        >
-          Sign Out
-        </button>
+        <div>
+          <span style={{ marginRight: "15px" }}>{role.toUpperCase()}</span>
+          <button onClick={() => supabase.auth.signOut()}>Sign Out</button>
+        </div>
       </nav>
 
-      <hr />
-
-      {/* --- SHARED MODAL ENGINE --- */}
-      {showForm && (
-        <div
-          style={{
-            position: "fixed",
-            top: "5%",
-            left: "5%",
-            right: "5%",
-            bottom: "5%",
-            background: "white",
-            padding: "30px",
-            boxShadow: "0 0 20px rgba(0,0,0,0.5)",
-            overflowY: "auto",
-            zIndex: 1000,
-            borderRadius: "8px",
-          }}
-        >
+      {/* PAGE ROUTER */}
+      <main style={{ marginTop: "20px" }}>
+        {currentView === "form" ? (
+          /* --- THE LESSON PAGE --- */
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
+              background: "#f9f9f9",
+              padding: "30px",
+              borderRadius: "8px",
             }}
           >
-            <h2 style={{ margin: 0 }}>{mode.toUpperCase()} LESSON</h2>
             <button
-              onClick={() => setShowForm(false)}
-              style={{ cursor: "pointer" }}
+              onClick={() => setCurrentView("list")}
+              style={{ marginBottom: "20px" }}
             >
-              X
+              ← Back to Dashboard
             </button>
+            <h2 style={{ marginBottom: "20px" }}>
+              {mode === "view"
+                ? "Lesson Details"
+                : mode === "edit"
+                ? "Edit Lesson"
+                : "New Lesson"}
+            </h2>
+            <LessonForm
+              userId={session.user.id}
+              initialData={selectedLesson}
+              mode={mode}
+              onClose={() => setCurrentView("list")}
+              onSave={() => {
+                setRefreshKey((prev) => prev + 1);
+                setCurrentView("list"); // Go back to list after saving
+              }}
+            />
           </div>
-          <hr />
-          <LessonForm
-            userId={session.user.id}
-            initialData={selectedLesson}
-            mode={mode}
-            onClose={() => setShowForm(false)}
-            onSave={() => {
-              setRefreshKey((prev) => prev + 1);
-              setShowForm(false);
-            }}
-          />
-        </div>
-      )}
+        ) : (
+          /* --- THE DASHBOARD PAGE --- */
+          <div>
+            <header
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <h1>{role === "admin" ? "All Lessons" : "My Lessons"}</h1>
+              {role !== "admin" && (
+                <button
+                  style={{
+                    padding: "10px 20px",
+                    backgroundColor: "#007bff",
+                    color: "white",
+                    borderRadius: "5px",
+                    border: "none",
+                  }}
+                  onClick={() => {
+                    setSelectedLesson(null);
+                    setMode("create");
+                    setCurrentView("form");
+                  }}
+                >
+                  + Create New Lesson
+                </button>
+              )}
+            </header>
 
-      {/* --- ROLE BASED DASHBOARDS --- */}
-      {role === "admin" ? (
-        <div>
-          <h1>Admin Dashboard</h1>
-          <p>Viewing all teacher activity (Read-Only).</p>
-          <LessonList
-            userId={session.user.id}
-            isAdmin={true}
-            refreshKey={refreshKey}
-            onAction={(lesson, m) => handleAction(lesson, m)}
-          />
-        </div>
-      ) : (
-        <div>
-          <h1>My Lesson Plans</h1>
-          <button
-            onClick={() => {
-              setSelectedLesson(null);
-              setMode("create");
-              setShowForm(true);
-            }}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#007bff",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
-            + Create New Plan
-          </button>
-
-          <LessonList
-            userId={session.user.id}
-            refreshKey={refreshKey}
-            isAdmin={false}
-            onAction={(lesson, m) => handleAction(lesson, m)}
-          />
-        </div>
-      )}
+            <LessonList
+              userId={session.user.id}
+              isAdmin={role === "admin"}
+              refreshKey={refreshKey}
+              onAction={handleAction}
+            />
+          </div>
+        )}
+      </main>
     </div>
   );
 }
