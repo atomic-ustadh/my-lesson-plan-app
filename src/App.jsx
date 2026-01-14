@@ -86,7 +86,13 @@ function App() {
 
   return (
     <div style={{ padding: "20px" }}>
-      <nav>
+      <nav
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <span>
           Logged in as: <strong>{role}</strong>
         </span>
@@ -96,7 +102,6 @@ function App() {
             setSession(null);
             setRole(null);
           }}
-          style={{ marginLeft: "10px" }}
         >
           Sign Out
         </button>
@@ -104,41 +109,62 @@ function App() {
 
       <hr />
 
+      {/* --- SHARED MODAL ENGINE --- */}
+      {showForm && (
+        <div
+          style={{
+            position: "fixed",
+            top: "5%",
+            left: "5%",
+            right: "5%",
+            bottom: "5%",
+            background: "white",
+            padding: "30px",
+            boxShadow: "0 0 20px rgba(0,0,0,0.5)",
+            overflowY: "auto",
+            zIndex: 1000,
+            borderRadius: "8px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <h2 style={{ margin: 0 }}>{mode.toUpperCase()} LESSON</h2>
+            <button
+              onClick={() => setShowForm(false)}
+              style={{ cursor: "pointer" }}
+            >
+              X
+            </button>
+          </div>
+          <hr />
+          <LessonForm
+            userId={session.user.id}
+            initialData={selectedLesson}
+            mode={mode}
+            onClose={() => setShowForm(false)}
+            onSave={() => {
+              setRefreshKey((prev) => prev + 1);
+              setShowForm(false);
+            }}
+          />
+        </div>
+      )}
+
+      {/* --- ROLE BASED DASHBOARDS --- */}
       {role === "admin" ? (
         <div>
           <h1>Admin Dashboard</h1>
           <p>Viewing all teacher activity (Read-Only).</p>
-
-          {/* ADD THIS MODAL BLOCK FOR ADMINS TOO */}
-          {showForm && (
-            <div
-              style={{
-                position: "fixed",
-                top: "10%",
-                left: "10%",
-                right: "10%",
-                bottom: "10%",
-                background: "white",
-                padding: "30px",
-                boxShadow: "0 0 20px rgba(0,0,0,0.5)",
-                overflowY: "auto",
-                zIndex: 1000,
-              }}
-            >
-              <h2>VIEWING LESSON (Admin)</h2>
-              <LessonForm
-                userId={session.user.id}
-                initialData={selectedLesson}
-                mode="view" // Always "view" for admins
-                onClose={() => setShowForm(false)}
-              />
-            </div>
-          )}
-
           <LessonList
             userId={session.user.id}
             isAdmin={true}
-            onAction={(lesson, m) => handleAction(lesson, "view")} // Force "view" mode
+            refreshKey={refreshKey}
+            onAction={(lesson, m) => handleAction(lesson, m)}
           />
         </div>
       ) : (
@@ -146,47 +172,26 @@ function App() {
           <h1>My Lesson Plans</h1>
           <button
             onClick={() => {
-              setSelectedLesson(null); // Clear any old data
-              setMode("create"); // Set mode to create
-              setShowForm(true); // Open the modal
+              setSelectedLesson(null);
+              setMode("create");
+              setShowForm(true);
+            }}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#007bff",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
             }}
           >
             + Create New Plan
           </button>
 
-          {showForm && (
-            <div
-              style={{
-                position: "fixed",
-                top: "10%",
-                left: "10%",
-                right: "10%",
-                bottom: "10%",
-                background: "white",
-                padding: "30px",
-                boxShadow: "0 0 20px rgba(0,0,0,0.5)",
-                overflowY: "auto",
-                zIndex: 1000,
-              }}
-            >
-              <h2>{mode.toUpperCase()} LESSON</h2>
-              <LessonForm
-                userId={session.user.id}
-                initialData={selectedLesson}
-                mode={mode}
-                onClose={() => setShowForm(false)}
-                onSave={() => {
-                  setRefreshKey((prev) => prev + 1);
-                  setShowForm(false);
-                }}
-              />
-            </div>
-          )}
-
           <LessonList
             userId={session.user.id}
             refreshKey={refreshKey}
-            isAdmin={role === "admin"}
+            isAdmin={false}
             onAction={(lesson, m) => handleAction(lesson, m)}
           />
         </div>
