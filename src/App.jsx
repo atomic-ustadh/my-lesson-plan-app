@@ -5,11 +5,19 @@ import LessonForm from "./components/LessonForm";
 import LessonList from "./components/LessonList";
 
 function App() {
+  const [selectedLesson, setSelectedLesson] = useState(null);
+  const [mode, setMode] = useState("create"); // create, edit, view, duplicate
   const [refreshKey, setRefreshKey] = useState(0); // Used to force-refresh the list
   const [showForm, setShowForm] = useState(false); // Toggles the create form
   const [session, setSession] = useState(null);
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const openForm = (lesson = null, currentMode = "create") => {
+    setSelectedLesson(lesson);
+    setMode(currentMode);
+    setShowForm(true);
+  };
 
   useEffect(() => {
     // 1. Check for current session on load
@@ -80,34 +88,44 @@ function App() {
       ) : (
         <div>
           <h1>My Lesson Plans</h1>
-
-          {/* Toggle the form visibility */}
-          <button onClick={() => setShowForm(!showForm)}>
-            {showForm ? "Cancel" : "+ Create New Plan"}
+          <button onClick={() => openForm(null, "create")}>
+            + Create New Plan
           </button>
 
           {showForm && (
             <div
               style={{
-                marginTop: "20px",
-                border: "1px solid #ccc",
-                padding: "15px",
+                position: "fixed",
+                top: "10%",
+                left: "10%",
+                right: "10%",
+                bottom: "10%",
+                background: "white",
+                padding: "30px",
+                boxShadow: "0 0 20px rgba(0,0,0,0.5)",
+                overflowY: "auto",
+                zIndex: 1000,
               }}
             >
+              <h2>{mode.toUpperCase()} LESSON</h2>
               <LessonForm
                 userId={session.user.id}
+                initialData={selectedLesson}
+                mode={mode}
+                onClose={() => setShowForm(false)}
                 onSave={() => {
-                  setRefreshKey((prev) => prev + 1); // This triggers the list to update
-                  setShowForm(false); // Hide the form after saving
+                  setRefreshKey((prev) => prev + 1);
+                  setShowForm(false);
                 }}
               />
             </div>
           )}
 
-          <hr />
-
-          {/* Notice the 'key' prop—it forces the list to reload when refreshKey changes */}
-          <LessonList key={refreshKey} userId={session.user.id} />
+          <LessonList
+            userId={session.user.id}
+            refreshKey={refreshKey}
+            onAction={(lesson, m) => openForm(lesson, m)}
+          />
         </div>
       )}
     </div>

@@ -1,84 +1,91 @@
-import { useState } from "react";
-import { supabase } from "../supabaseClient";
-import { TEMPLATES } from "../templates";
+import { useState, useEffect } from 'react';
+import { supabase } from '../supabaseClient';
+import { TEMPLATES } from '../templates';
 
-export default function LessonForm({ userId, onSave }) {
+export default function LessonForm({ userId, onSave, initialData = null, mode = 'create', onClose }) {
   const [formData, setFormData] = useState({
-    title: "",
-    subject: "",
-    grade: "",
-    objectives: "",
-    activities: "",
-    assessment: "",
+    title: '', subject: '', grade: '',
+    objectives: '', activities: '', assessment: ''
   });
 
-  const applyTemplate = (key) => {
-    const template = TEMPLATES[key];
-    setFormData({ ...formData, ...template });
-  };
+  // Sync form with initialData if editing/viewing/duplicating
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        title: mode === 'duplicate' ? `${initialData.title} (Copy)` : initialData.title,
+        subject: initialData.subject || '',
+        grade: initialData.grade_level || '',
+        objectives: initialData.content?.objectives || '',
+        activities: initialData.content?.activities || '',
+        assessment: initialData.content?.assessment || ''
+      });
+    }
+  }, [initialData, mode]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { error } = await supabase.from("lesson_plans").insert([
-      {
-        user_id: userId,
-        title: formData.title,
-        subject: formData.subject,
-        grade_level: formData.grade,
-        content: {
-          objectives: formData.objectives,
-          activities: formData.activities,
-          assessment: formData.assessment,
-        },
-      },
-    ]);
+    if (mode === 'view') return;
 
-    if (error) alert(error.message);
-    else onSave(); // Refresh the list
+    const payload = {
+      user_id: userId,
+      title: formData.title,
+      subject: formData.subject,
+      grade_level: formData.grade,
+      content: { 
+        objectives: formData.objectives, 
+        activities: formData.activities, 
+        assessment: formData.assessment 
+      }
+    };
+
+    let result;
+    if (mode === 'edit') {
+      result = await supabase.from('lesson_plans').update(payload).eq('id', initialData.id);
+    } else {
+      // 'create' or 'duplicate' both use INSERT
+      result = await supabase.from('lesson_plans').insert([payload]);
+    }
+
+    if (result.error) alert(result.error.message);
+    else onSave();
   };
 
+  const isReadOnly = mode === 'view';
+
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-    >
-      <select onChange={(e) => applyTemplate(e.target.value)}>
-        <option value="">-- Choose a Template --</option>
-        {Object.entries(TEMPLATES).map(([key, t]) => (
-          <option key={key} value={key}>
-            {t.name}
-          </option>
-        ))}
-      </select>
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      {!isReadOnly && mode !== 'edit' && (
+        <select onChange={(e) => {
+          const t = TEMPLATES[e.target.value];
+          if(t) setFormData({...formData, objectives: t.objectives, activities: t.activities, assessment: t.assessment});
+        }}>
+          <option value="">-- Apply a Template --</option>
+          {Object.entries(TEMPLATES).map(([key, t]) => <option key={key} value={key}>{t.name}</option>)}
+        </select>
+      )}
 
-      <input
-        placeholder="Lesson Title"
-        required
-        value={formData.title}
-        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+      <input 
+        disabled={isReadOnly}
+        placeholder="Lesson Title" 
+        value={formData.title} 
+        onChange={e => setFormData({...formData, title: e.target.value})} 
+        required 
       />
-      <input
-        placeholder="Subject"
-        value={formData.subject}
-        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-      />
-
-      <textarea
-        placeholder="Objectives"
-        value={formData.objectives}
-        onChange={(e) =>
-          setFormData({ ...formData, objectives: e.target.value })
-        }
-      />
-      <textarea
-        placeholder="Activities"
-        value={formData.activities}
-        onChange={(e) =>
-          setFormData({ ...formData, activities: e.target.value })
-        }
+      
+      <textarea 
+        disabled={isReadOnly}
+        placeholder="Activities" 
+        rows="5"
+        value={formData.activities} 
+        onChange={e => setFormData({...formData, activities: e.target.value})} 
       />
 
-      <button type="submit">Save Lesson Plan</button>
+      <div style={{ display: 'flex', gap: '10px' }}>
+        {!isReadOnly && <button type="submit" style={{ backgroundColor: 'green', color: 'white' }}>
+          {mode === 'edit' ? 'Update Plan' : 'Save Plan'}
+        </button>}
+        <button type="button" onClick={onClose}>Close</button>
+      </div>
     </form>
   );
 }
