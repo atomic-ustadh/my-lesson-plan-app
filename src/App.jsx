@@ -113,7 +113,13 @@ function App() {
       ) : (
         <div>
           <h1>My Lesson Plans</h1>
-          <button onClick={() => openForm(null, "create")}>
+          <button
+            onClick={() => {
+              setSelectedLesson(null); // Clear any old data
+              setMode("create"); // Set mode to create
+              setShowForm(true); // Open the modal
+            }}
+          >
             + Create New Plan
           </button>
 
@@ -149,7 +155,7 @@ function App() {
           <LessonList
             userId={session.user.id}
             refreshKey={refreshKey}
-            isAdmin={role === 'admin'}
+            isAdmin={role === "admin"}
             onAction={(lesson, m) => handleAction(lesson, m)}
           />
         </div>
