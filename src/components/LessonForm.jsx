@@ -58,7 +58,10 @@ export default function LessonForm({
       const c = initialData.content || {};
       setFormData({
         subject: initialData.subject || "",
-        topic: initialData.title || "",
+        topic:
+          mode === "duplicate"
+            ? `${initialData.title} (Copy)`
+            : initialData.title || "",
         duration: c.duration || "",
         grade: initialData.grade_level || "",
         period: c.period || "",
@@ -75,8 +78,29 @@ export default function LessonForm({
         teacherComment: c.teacherComment || "",
         supervisorComment: c.supervisorComment || "",
       });
+    } else {
+      // CLEANUP: Reset form when creating a brand new lesson
+      setFormData({
+        subject: "",
+        topic: "",
+        duration: "",
+        grade: "",
+        period: "",
+        date: "",
+        age: "",
+        week: "",
+        introduction: "",
+        objectives: "",
+        summary: "",
+        methodology: "",
+        resources: "",
+        evaluation: "",
+        assignment: "",
+        teacherComment: "",
+        supervisorComment: "",
+      });
     }
-  }, [initialData]);
+  }, [initialData, mode]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -112,6 +136,7 @@ export default function LessonForm({
         .update(payload)
         .eq("id", initialData.id);
     } else {
+      // Both 'create' and 'duplicate' use insert
       result = await supabase.from("lesson_plans").insert([payload]);
     }
 
@@ -354,7 +379,7 @@ export default function LessonForm({
 
       <hr style={{ margin: "30px 0" }} />
 
-      {/* SECTION 3: Feedback (All Optional) */}
+      {/* SECTION 3: Feedback */}
       <label style={labelStyle}>16. Teacher's Comment</label>
       <input
         disabled={isReadOnly}

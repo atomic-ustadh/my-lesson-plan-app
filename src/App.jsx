@@ -6,23 +6,13 @@ import LessonList from "./components/LessonList";
 
 function App() {
   const [selectedLesson, setSelectedLesson] = useState(null);
-  const [mode, setMode] = useState("create"); // create, edit, view, duplicate
-  const [refreshKey, setRefreshKey] = useState(0); // Used to force-refresh the list
-  const [currentView, setCurrentView] = useState("list"); // 'list' or 'form'
+  const [mode, setMode] = useState("create");
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [currentView, setCurrentView] = useState("list");
   const [session, setSession] = useState(null);
   const [role, setRole] = useState(null);
+  const [userName, setUserName] = useState(""); // Added missing state
   const [loading, setLoading] = useState(true);
-
-  const handleAction = (lesson, mode) => {
-    if (mode === "delete") {
-      handleDelete(lesson.id);
-    } else {
-      // This handles 'view', 'edit', and 'duplicate'
-      setSelectedLesson(lesson);
-      setMode(mode);
-      setCurrentView("form"); // Switch to the form page
-    }
-  };
 
   useEffect(() => {
     // 1. Check for current session on load
@@ -37,9 +27,11 @@ function App() {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      if (session) fetchRole(session.user.id);
-      else {
+      if (session) {
+        fetchRole(session.user.id);
+      } else {
         setRole(null);
+        setUserName("");
         setLoading(false);
       }
     });
@@ -47,22 +39,36 @@ function App() {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Helper function to get the user's role
+  // Helper function to get the user's role and name
   async function fetchRole(userId) {
-    const { data } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", userId)
-      .single();
-    setRole(data?.role);
-    setLoading(false);
+    try {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("role, full_name")
+        .eq("id", userId)
+        .single();
+
+      if (error) throw error;
+
+      setRole(data?.role || "teacher");
+      setUserName(data?.full_name || "Teacher");
+    } catch (err) {
+      console.error("Profile fetch error:", err.message);
+      setRole("teacher"); // Fallback
+    } finally {
+      setLoading(false); // Ensures loading stops even if fetch fails
+    }
   }
 
-  if (loading) return <div>Loading...</div>;
-
-  if (!session) {
-    return <Login onLoginSuccess={(userRole) => setRole(userRole)} />;
-  }
+  const handleAction = (lesson, mode) => {
+    if (mode === "delete") {
+      handleDelete(lesson.id);
+    } else {
+      setSelectedLesson(lesson);
+      setMode(mode);
+      setCurrentView("form");
+    }
+  };
 
   const handleDelete = async (lessonId) => {
     const confirmed = window.confirm(
@@ -78,19 +84,40 @@ function App() {
       if (error) {
         alert("Error deleting lesson: " + error.message);
       } else {
-        // Refresh the list to show the lesson is gone
         setRefreshKey((prev) => prev + 1);
       }
     }
   };
 
+  if (loading) {
+    return (
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}
+      >
+        Loading Application...
+      </div>
+    );
+  }
+
+  if (!session) {
+    return <Login onLoginSuccess={(userRole) => setRole(userRole)} />;
+  }
+
   return (
-    <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
-      {/* NAVIGATION BAR (Always Visible) */}
+    <div
+      style={{
+        padding: "20px",
+        maxWidth: "1200px",
+        margin: "0 auto",
+        fontFamily: "sans-serif",
+      }}
+    >
+      {/* NAVIGATION BAR */}
       <nav
         style={{
           display: "flex",
           justifyContent: "space-between",
+          alignItems: "center",
           paddingBottom: "20px",
           borderBottom: "1px solid #eee",
         }}
@@ -98,35 +125,48 @@ function App() {
         <span style={{ fontSize: "1.2rem" }}>
           📝 <strong>LessonPlanner</strong>
         </span>
-        <div>
-          <span style={{ marginRight: "15px" }}>{role.toUpperCase()}</span>
-          <button onClick={() => supabase.auth.signOut()}>Sign Out</button>
+        <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+          <span>
+            Logged in as: <strong>{userName}</strong> <small>({role})</small>
+          </span>
+          <button
+            onClick={() => supabase.auth.signOut()}
+            style={{ padding: "5px 10px", cursor: "pointer" }}
+          >
+            Sign Out
+          </button>
         </div>
       </nav>
 
       {/* PAGE ROUTER */}
       <main style={{ marginTop: "20px" }}>
         {currentView === "form" ? (
-          /* --- THE LESSON PAGE --- */
           <div
             style={{
               background: "#f9f9f9",
               padding: "30px",
               borderRadius: "8px",
+              border: "1px solid #ddd",
             }}
           >
             <button
               onClick={() => setCurrentView("list")}
-              style={{ marginBottom: "20px" }}
+              style={{ marginBottom: "20px", cursor: "pointer" }}
             >
               ← Back to Dashboard
             </button>
-            <h2 style={{ marginBottom: "20px" }}>
+            <h2
+              style={{
+                marginBottom: "20px",
+                borderBottom: "2px solid #333",
+                paddingBottom: "10px",
+              }}
+            >
               {mode === "view"
-                ? "Lesson Details"
+                ? "View Lesson Details"
                 : mode === "edit"
-                ? "Edit Lesson"
-                : "New Lesson"}
+                ? "Edit Lesson Plan"
+                : "Create New Lesson"}
             </h2>
             <LessonForm
               userId={session.user.id}
@@ -135,21 +175,23 @@ function App() {
               onClose={() => setCurrentView("list")}
               onSave={() => {
                 setRefreshKey((prev) => prev + 1);
-                setCurrentView("list"); // Go back to list after saving
+                setCurrentView("list");
               }}
             />
           </div>
         ) : (
-          /* --- THE DASHBOARD PAGE --- */
           <div>
             <header
               style={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
+                marginBottom: "20px",
               }}
             >
-              <h1>{role === "admin" ? "All Lessons" : "My Lessons"}</h1>
+              <h1>
+                {role === "admin" ? "Global Activity" : "My Lesson Plans"}
+              </h1>
               {role !== "admin" && (
                 <button
                   style={{
@@ -158,6 +200,8 @@ function App() {
                     color: "white",
                     borderRadius: "5px",
                     border: "none",
+                    cursor: "pointer",
+                    fontWeight: "bold",
                   }}
                   onClick={() => {
                     setSelectedLesson(null);
