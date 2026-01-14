@@ -14,54 +14,35 @@ export default function LessonList({
     fetchLessons();
   }, [refreshKey, userId]);
 
-async function fetchLessons() {
+  async function fetchLessons() {
     setLoading(true);
-    // First fetch lesson plans
-    let query = supabase.from("lesson_plans").select("*");
+    try {
+      // We explicitly use the relationship to 'profiles' via the 'user_id' column
+      // This works now because you fixed the Foreign Key in the database
+      let query = supabase.from("lesson_plans").select(`
+        *,
+        profiles!user_id (
+          full_name
+        )
+      `);
 
-    if (!isAdmin) query = query.eq("user_id", userId);
-
-    const { data: lessonsData, error: lessonsError } = await query.order("created_at", {
-      ascending: false,
-    });
-
-    if (lessonsError) {
-      console.error("Error fetching lessons:", lessonsError);
-      setLoading(false);
-      return;
-    }
-
-    // If admin and we have lessons, fetch teacher names
-    if (isAdmin && lessonsData && lessonsData.length > 0) {
-      const userIds = [...new Set(lessonsData.map(lesson => lesson.user_id))];
-      const { data: profilesData, error: profilesError } = await supabase
-        .from("profiles")
-        .select("id, full_name")
-        .in("id", userIds);
-
-      if (profilesError) {
-        console.error("Error fetching profiles:", profilesError);
-      } else {
-        // Create a map of user_id to full_name
-        const profileMap = {};
-        profilesData.forEach(profile => {
-          profileMap[profile.id] = profile.full_name;
-        });
-        
-        // Add teacher names to lessons
-        const lessonsWithNames = lessonsData.map(lesson => ({
-          ...lesson,
-          profiles: { full_name: profileMap[lesson.user_id] || "Unknown Teacher" }
-        }));
-        
-        setLessons(lessonsWithNames);
-        setLoading(false);
-        return;
+      // If not admin, only show lessons belonging to the logged-in user
+      if (!isAdmin) {
+        query = query.eq("user_id", userId);
       }
-    }
 
-    setLessons(lessonsData || []);
-    setLoading(false);
+      const { data, error } = await query.order("created_at", {
+        ascending: false,
+      });
+
+      if (error) throw error;
+
+      setLessons(data || []);
+    } catch (error) {
+      console.error("Error fetching lessons:", error.message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   if (loading) return <div style={{ padding: "20px" }}>Updating list...</div>;
@@ -108,6 +89,7 @@ async function fetchLessons() {
                 <td style={{ padding: "10px" }}>{lesson.subject}</td>
                 {isAdmin && (
                   <td style={{ padding: "10px" }}>
+                    {/* Accessing the joined profile name */}
                     {lesson.profiles?.full_name || "Unknown Teacher"}
                   </td>
                 )}
