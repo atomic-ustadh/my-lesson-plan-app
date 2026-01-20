@@ -34,7 +34,7 @@ export default function LandingPage() {
                     {/* Language Toggle */}
                     <button
                         onClick={toggleLanguage}
-                        className="text-sm font-medium text-emerald-700 hover:text-emerald-800 px-3 py-1 border border-emerald-200 rounded-full bg-white/50 backdrop-blur-sm shadow-sm hover:bg-emerald-50 transition-colors hidden sm:block"
+                        className="text-xs md:text-sm font-medium text-emerald-700 hover:text-emerald-800 px-2 md:px-3 py-1 border border-emerald-200 rounded-full bg-white/50 backdrop-blur-sm shadow-sm hover:bg-emerald-50 transition-colors"
                     >
                         {language === "en" ? "🇮🇶 العربية" : "🇺🇸 English"}
                     </button>
@@ -42,7 +42,7 @@ export default function LandingPage() {
                     {session ? (
                         <button
                             onClick={() => navigate("/dashboard")}
-                            className="px-5 py-2 rounded-full bg-emerald-700 text-white font-medium shadow-lg hover:bg-emerald-800 transition-all"
+                            className="px-4 md:px-5 py-1.5 md:py-2 rounded-full bg-emerald-700 text-white text-sm md:text-base font-medium shadow-lg hover:bg-emerald-800 transition-all"
                         >
                             {t("dashboard")}
                         </button>
@@ -50,13 +50,13 @@ export default function LandingPage() {
                         <>
                             <button
                                 onClick={() => navigate("/login")}
-                                className="px-5 py-2 rounded-full text-emerald-800 font-medium border border-emerald-200 hover:bg-emerald-50 transition-colors"
+                                className="px-5 py-2 rounded-full text-emerald-800 font-medium border border-emerald-200 hover:bg-emerald-50 transition-colors hidden md:block"
                             >
                                 {t("signIn")}
                             </button>
                             <button
                                 onClick={() => navigate("/login", { state: { mode: 'signup' } })}
-                                className="px-5 py-2 rounded-full bg-emerald-700 text-white font-medium shadow-lg hover:bg-emerald-800 transition-transform transform hover:-translate-y-0.5"
+                                className="px-4 md:px-5 py-1.5 md:py-2 rounded-full bg-emerald-700 text-white text-sm md:text-base font-medium shadow-lg hover:bg-emerald-800 transition-transform transform hover:-translate-y-0.5"
                             >
                                 {t("signUp")}
                             </button>
