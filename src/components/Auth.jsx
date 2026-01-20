@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
+import { useAuth } from "../context/AuthContext";
 
 export default function Auth() {
     const location = useLocation();
@@ -14,6 +15,7 @@ export default function Auth() {
     const [message, setMessage] = useState({ type: "", text: "" });
     const navigate = useNavigate();
     const { t, toggleLanguage, language } = useLanguage();
+    const { recoveryMode, setRecoveryMode } = useAuth();
 
     useEffect(() => {
         // Handle explicit mode from location state
@@ -23,12 +25,11 @@ export default function Auth() {
     }, [location.state]);
 
     useEffect(() => {
-        // Detect recovery link (hash from Supabase reset email)
-        const hash = window.location.hash;
-        if (hash && hash.includes("type=recovery")) {
+        // If context says we are in recovery mode, show update view
+        if (recoveryMode) {
             setView("update");
         }
-    }, []);
+    }, [recoveryMode]);
 
     const handleAuth = async (e) => {
         e.preventDefault();
@@ -82,6 +83,7 @@ export default function Auth() {
                 });
                 if (error) throw error;
                 setMessage({ type: "success", text: t("passwordUpdateSuccess") });
+                setRecoveryMode(false);
                 setView("login");
             }
         } catch (error) {

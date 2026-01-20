@@ -16,12 +16,12 @@ function ProtectedRoute({ children }) {
 }
 
 function AppContent() {
-  const { session, userRole } = useAuth();
+  const { session, userRole, recoveryMode } = useAuth();
 
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={!session ? <Auth /> : <Navigate to="/dashboard" replace />} />
+      <Route path="/login" element={(!session || recoveryMode) ? <Auth /> : <Navigate to="/dashboard" replace />} />
 
       <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
         <Route path="/dashboard" element={<LessonList userId={session?.user?.id} isAdmin={userRole === 'admin'} />} />

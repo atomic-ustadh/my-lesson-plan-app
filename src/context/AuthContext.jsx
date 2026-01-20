@@ -8,6 +8,7 @@ export function AuthProvider({ children }) {
     const [userRole, setUserRole] = useState(null);
     const [userName, setUserName] = useState("");
     const [loading, setLoading] = useState(true);
+    const [recoveryMode, setRecoveryMode] = useState(false);
 
     useEffect(() => {
         // 1. Check active session
@@ -17,17 +18,28 @@ export function AuthProvider({ children }) {
             else setLoading(false);
         });
 
+        // Manual hash check as fallback for event detection
+        if (window.location.hash && window.location.hash.includes("type=recovery")) {
+            setRecoveryMode(true);
+        }
+
         // 2. Listen for auth changes
         const {
             data: { subscription },
-        } = supabase.auth.onAuthStateChange((_event, session) => {
+        } = supabase.auth.onAuthStateChange((event, session) => {
             setSession(session);
+
+            if (event === 'PASSWORD_RECOVERY') {
+                setRecoveryMode(true);
+            }
+
             if (session) {
                 fetchProfile(session.user.id, session.user);
             } else {
                 setUserRole(null);
                 setUserName("");
                 setLoading(false);
+                setRecoveryMode(false);
             }
         });
 
@@ -71,6 +83,8 @@ export function AuthProvider({ children }) {
         userRole,
         userName,
         loading,
+        recoveryMode,
+        setRecoveryMode,
         isAdmin: userRole === "admin",
     };
 
