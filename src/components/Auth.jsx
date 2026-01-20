@@ -5,38 +5,45 @@ import { useLanguage } from "../context/LanguageContext";
 
 export default function Auth() {
     const location = useLocation();
-    const [isLogin, setIsLogin] = useState(true);
+    const [view, setView] = useState("login"); // 'login' | 'signup' | 'forgot' | 'update'
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [fullName, setFullName] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState({ type: "", text: "" });
+    const navigate = useNavigate();
+    const { t, toggleLanguage, language } = useLanguage();
 
     useEffect(() => {
+        // Handle explicit mode from location state
         if (location.state?.mode === 'signup') {
-            setIsLogin(false);
+            setView("signup");
         }
     }, [location.state]);
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [fullName, setFullName] = useState(""); // For signup
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
-    const { t, toggleLanguage, language } = useLanguage();
+    useEffect(() => {
+        // Detect recovery link (hash from Supabase reset email)
+        const hash = window.location.hash;
+        if (hash && hash.includes("type=recovery")) {
+            setView("update");
+        }
+    }, []);
 
     const handleAuth = async (e) => {
         e.preventDefault();
         setLoading(true);
+        setMessage({ type: "", text: "" });
 
         try {
-            if (isLogin) {
-                // LOGIN
+            if (view === "login") {
                 const { error } = await supabase.auth.signInWithPassword({
                     email,
                     password,
                 });
                 if (error) throw error;
-                // Navigation handled by App/AuthContext state change or explicit navigate
                 navigate("/dashboard");
-            } else {
-                // SIGNUP
-                // 1. Pass metadata to Auth immediately
+            } else if (view === "signup") {
                 const { data, error } = await supabase.auth.signUp({
                     email,
                     password,
@@ -49,29 +56,36 @@ export default function Auth() {
                 });
                 if (error) throw error;
 
-                // 2. Ensuring Profile Exists (Upsert)
-                // If a trigger created it, we update. If not, we insert.
                 if (data.user) {
-                    const { error: profileError } = await supabase.from("profiles").upsert([
+                    await supabase.from("profiles").upsert([
                         {
                             id: data.user.id,
                             full_name: fullName,
                             role: "teacher",
                         },
                     ]);
-
-                    if (profileError) {
-                        console.error("Profile creation/update failed:", profileError);
-                        // If it failed because of RLS (e.g. user not logged in yet because email not confirmed),
-                        // we can't do much here. The metadata in step 1 is the fallback.
-                    }
                 }
-
-                alert(t("signupSuccess"));
-                setIsLogin(true);
+                setMessage({ type: "success", text: t("signupSuccess") });
+                setView("login");
+            } else if (view === "forgot") {
+                const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                    redirectTo: `${window.location.origin}/login`,
+                });
+                if (error) throw error;
+                setMessage({ type: "success", text: t("resetSentDesc") });
+            } else if (view === "update") {
+                if (password !== confirmPassword) {
+                    throw new Error(t("passwordMismatch"));
+                }
+                const { error } = await supabase.auth.updateUser({
+                    password: password,
+                });
+                if (error) throw error;
+                setMessage({ type: "success", text: t("passwordUpdateSuccess") });
+                setView("login");
             }
         } catch (error) {
-            alert(error.message);
+            setMessage({ type: "error", text: error.message });
         } finally {
             setLoading(false);
         }
@@ -90,11 +104,21 @@ export default function Auth() {
             <div className="max-w-md w-full bg-white rounded-lg shadow-xl overflow-hidden">
                 <div className="px-6 py-8">
                     <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
-                        {isLogin ? t("loginTitle") : t("signupTitle")}
+                        {view === "login" && t("loginTitle")}
+                        {view === "signup" && t("signupTitle")}
+                        {view === "forgot" && t("forgotPassword")}
+                        {view === "update" && t("updatePasswordBtn")}
                     </h2>
 
+                    {message.text && (
+                        <div className={`mb-6 p-4 rounded-md text-sm ${message.type === "error" ? "bg-red-50 text-red-700 border border-red-200" : "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                            }`}>
+                            {message.text}
+                        </div>
+                    )}
+
                     <form onSubmit={handleAuth} className="space-y-6">
-                        {!isLogin && (
+                        {view === "signup" && (
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
                                     {t("fullName")}
@@ -109,52 +133,97 @@ export default function Auth() {
                             </div>
                         )}
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                {t("email")}
-                            </label>
-                            <input
-                                type="email"
-                                required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
+                        {view !== "update" && (
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    {t("email")}
+                                </label>
+                                <input
+                                    type="email"
+                                    required
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </div>
+                        )}
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                {t("password")}
-                            </label>
-                            <input
-                                type="password"
-                                required
-                                minLength={6}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
+                        {view !== "forgot" && (
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    {view === "update" ? t("newPassword") : t("password")}
+                                </label>
+                                <input
+                                    type="password"
+                                    required
+                                    minLength={6}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </div>
+                        )}
+
+                        {view === "update" && (
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    {t("confirmPassword")}
+                                </label>
+                                <input
+                                    type="password"
+                                    required
+                                    minLength={6}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                />
+                            </div>
+                        )}
+
+                        {view === "login" && (
+                            <div className="flex justify-end">
+                                <button
+                                    type="button"
+                                    className="text-xs text-blue-600 hover:text-blue-500"
+                                    onClick={() => setView("forgot")}
+                                >
+                                    {t("forgotPassword")}
+                                </button>
+                            </div>
+                        )}
 
                         <button
                             type="submit"
                             disabled={loading}
                             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
                         >
-                            {loading ? t("processing") : isLogin ? t("signIn") : t("signUp")}
+                            {loading ? t("processing") : (
+                                view === "login" ? t("signIn") :
+                                    view === "signup" ? t("signUp") :
+                                        view === "forgot" ? t("resetBtn") :
+                                            t("updatePasswordBtn")
+                            )}
                         </button>
                     </form>
 
-                    <div className="mt-6 text-center">
-                        <button
-                            type="button"
-                            className="text-sm text-blue-600 hover:text-blue-500"
-                            onClick={() => setIsLogin(!isLogin)}
-                        >
-                            {isLogin
-                                ? t("noAccount")
-                                : t("hasAccount")}
-                        </button>
+                    <div className="mt-6 text-center space-y-2">
+                        {view === "forgot" ? (
+                            <button
+                                type="button"
+                                className="text-sm text-blue-600 hover:text-blue-500"
+                                onClick={() => setView("login")}
+                            >
+                                {t("backToLogin")}
+                            </button>
+                        ) : view !== "update" && (
+                            <button
+                                type="button"
+                                className="text-sm text-blue-600 hover:text-blue-500"
+                                onClick={() => setView(view === "login" ? "signup" : "login")}
+                            >
+                                {view === "login" ? t("noAccount") : t("hasAccount")}
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>

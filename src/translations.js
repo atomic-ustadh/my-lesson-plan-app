@@ -13,6 +13,16 @@ export const translations = {
         noAccount: "Don't have an account? Sign up",
         hasAccount: "Already have an account? Sign in",
         signupSuccess: "Signup successful! You can now log in.",
+        forgotPassword: "Forgot Password?",
+        backToLogin: "Back to Sign In",
+        resetBtn: "Send Reset Link",
+        resetSentTitle: "Check Your Email",
+        resetSentDesc: "If an account exists with this email, you will receive a password reset link shortly.",
+        newPassword: "New Password",
+        confirmPassword: "Confirm New Password",
+        updatePasswordBtn: "Update Password",
+        passwordMismatch: "Passwords do not match.",
+        passwordUpdateSuccess: "Password updated successfully! You can now log in.",
 
         // Landing Page
         heroTitle: "Plan Your Lessons with Excellence",
@@ -107,6 +117,16 @@ export const translations = {
         noAccount: "ليس لديك حساب؟ سجل الآن",
         hasAccount: "لديك حساب بالفعل؟ سجل دخولك",
         signupSuccess: "تم التسجيل بنجاح! يمكنك تسجيل الدخول الآن.",
+        forgotPassword: "نسيت كلمة المرور؟",
+        backToLogin: "العودة لتسجيل الدخول",
+        resetBtn: "إرسال رابط إعادة التعيين",
+        resetSentTitle: "تحقق من بريدك الإلكتروني",
+        resetSentDesc: "إذا كان هناك حساب مرتبط بهذا البريد، فستتلقى رابطاً لإعادة تعيين كلمة المرور قريباً.",
+        newPassword: "كلمة المرور الجديدة",
+        confirmPassword: "تأكيد كلمة المرور الجديدة",
+        updatePasswordBtn: "تحديث كلمة المرور",
+        passwordMismatch: "كلمات المرور غير متطابقة.",
+        passwordUpdateSuccess: "تم تحديث كلمة المرور بنجاح! يمكنك الآن تسجيل الدخول.",
 
         // Layout
         signOut: "خروج",
