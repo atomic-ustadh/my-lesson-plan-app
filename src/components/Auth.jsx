@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function Auth() {
     const [isLogin, setIsLogin] = useState(true);
@@ -9,6 +10,7 @@ export default function Auth() {
     const [fullName, setFullName] = useState(""); // For signup
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const { t } = useLanguage();
 
     const handleAuth = async (e) => {
         e.preventDefault();
@@ -57,7 +59,7 @@ export default function Auth() {
                     }
                 }
 
-                alert("Signup successful! You can now log in.");
+                alert(t("signupSuccess"));
                 setIsLogin(true);
             }
         } catch (error) {
@@ -68,18 +70,18 @@ export default function Auth() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-red-100 px-4">
-            <div className="max-w-md w-full bg-green-100 rounded-lg shadow-xl overflow-hidden">
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+            <div className="max-w-md w-full bg-white rounded-lg shadow-xl overflow-hidden">
                 <div className="px-6 py-8">
                     <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
-                        {isLogin ? "Welcome Back" : "Create Account"}
+                        {isLogin ? t("loginTitle") : t("signupTitle")}
                     </h2>
 
                     <form onSubmit={handleAuth} className="space-y-6">
                         {!isLogin && (
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Full Name
+                                    {t("fullName")}
                                 </label>
                                 <input
                                     type="text"
@@ -93,7 +95,7 @@ export default function Auth() {
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                Email Address
+                                {t("email")}
                             </label>
                             <input
                                 type="email"
@@ -106,7 +108,7 @@ export default function Auth() {
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                Password
+                                {t("password")}
                             </label>
                             <input
                                 type="password"
@@ -123,7 +125,7 @@ export default function Auth() {
                             disabled={loading}
                             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
                         >
-                            {loading ? "Processing..." : isLogin ? "Sign In" : "Sign Up"}
+                            {loading ? t("processing") : isLogin ? t("signIn") : t("signUp")}
                         </button>
                     </form>
 
@@ -134,8 +136,8 @@ export default function Auth() {
                             onClick={() => setIsLogin(!isLogin)}
                         >
                             {isLogin
-                                ? "Don't have an account? Sign up"
-                                : "Already have an account? Sign in"}
+                                ? t("noAccount")
+                                : t("hasAccount")}
                         </button>
                     </div>
                 </div>

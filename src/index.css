@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+@theme {
+    --font-ubuntu: "Ubuntu", sans-serif;
+    --font-arabic: "Traditional Arabic", "Amiri", serif;
+}
+
+.font-ltr {
+    font-family: var(--font-ubuntu);
+}
+
+.font-rtl {
+    font-family: var(--font-arabic);
+}

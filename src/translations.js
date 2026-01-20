@@ -1,0 +1,140 @@
+export const translations = {
+    en: {
+        // Auth
+        appTitle: "LessonPlanner",
+        loginTitle: "Welcome Back",
+        signupTitle: "Create Account",
+        fullName: "Full Name",
+        email: "Email Address",
+        password: "Password",
+        signIn: "Sign In",
+        signUp: "Sign Up",
+        processing: "Processing...",
+        noAccount: "Don't have an account? Sign up",
+        hasAccount: "Already have an account? Sign in",
+        signupSuccess: "Signup successful! You can now log in.",
+
+        // Layout
+        signOut: "Sign Out",
+        languageName: "English",
+
+        // Lesson List
+        allLessons: "All Lesson Plans",
+        myLessons: "My Lessons",
+        newLesson: "+ New Lesson",
+        noLessons: "No lesson plans found.",
+        colWeek: "Week",
+        colTopic: "Topic",
+        colSubject: "Subject",
+        colTeacher: "Teacher",
+        colActions: "Actions",
+        btnView: "View",
+        btnEdit: "Edit",
+        btnCopy: "Copy",
+        btnDelete: "Delete",
+        confirmDelete: "Are you sure you want to delete this lesson?",
+
+        // Lesson Form
+        editLesson: "Edit Lesson Plan",
+        createLesson: "New Lesson Plan",
+        viewLesson: "View Lesson Plan",
+        saveBtn: "Save Lesson Plan",
+        updateBtn: "Update Lesson Plan",
+        cancelBtn: "Cancel",
+        closeBtn: "Close",
+
+        // Form Labels
+        lblSubject: "Subject",
+        lblTopic: "Topic",
+        lblDate: "Date",
+        lblDuration: "Duration (mins)",
+        lblGrade: "Grade Level",
+        lblPeriod: "period",
+        lblAge: "Age Group",
+        lblWeek: "Week Number",
+        lblIntro: "Introduction",
+        lblObjectives: "Objectives",
+        lblSummary: "Summary",
+        lblMethod: "Methodology",
+        lblResources: "Resources",
+        lblEval: "Evaluation",
+        lblAssign: "Assignment",
+        lblTComment: "Teacher Comment",
+        lblSComment: "Supervisor Comment",
+
+        // Placeholders
+        phSubject: "Select Subject",
+        phTopic: "Enter lesson topic",
+        phIntro: "Brief introduction...",
+        phObj: "List your objectives...",
+    },
+    ar: {
+        // Auth
+        appTitle: "مخطط الدروس",
+        loginTitle: "أهلاً بك مجدداً",
+        signupTitle: "إنشاء حساب",
+        fullName: "الاسم الكامل",
+        email: "البريد الإلكتروني",
+        password: "كلمة المرور",
+        signIn: "تسجيل الدخول",
+        signUp: "إنشاء حساب",
+        processing: "جاري المعالجة...",
+        noAccount: "ليس لديك حساب؟ سجل الآن",
+        hasAccount: "لديك حساب بالفعل؟ سجل دخولك",
+        signupSuccess: "تم التسجيل بنجاح! يمكنك تسجيل الدخول الآن.",
+
+        // Layout
+        signOut: "خروج",
+        languageName: "العربية",
+
+        // Lesson List
+        allLessons: "جميع خطط الدروس",
+        myLessons: "دروسي",
+        newLesson: "+ درس جديد",
+        noLessons: "لا توجد خطط دروس.",
+        colWeek: "الأسبوع",
+        colTopic: "الموضوع",
+        colSubject: "المادة",
+        colTeacher: "المعلم",
+        colActions: "إجراءات",
+        btnView: "عرض",
+        btnEdit: "تعديل",
+        btnCopy: "نسخ",
+        btnDelete: "حذف",
+        confirmDelete: "هل أنت متأكد أنك تريد حذف هذا الدرس؟",
+
+        // Lesson Form
+        editLesson: "تعديل خطة الدرس",
+        createLesson: "خطة درس جديدة",
+        viewLesson: "عرض خطة الدرس",
+        saveBtn: "حفظ الخطة",
+        updateBtn: "تحديث الخطة",
+        cancelBtn: "إلغاء",
+        closeBtn: "إغلاق",
+
+        // Form Labels
+        lblSubject: "المادة",
+        lblTopic: "الموضوع",
+        lblDate: "التاريخ",
+        lblDuration: "المدة (دقيقة)",
+        lblGrade: "الصف الدراسي",
+        lblPeriod: "الحصة",
+        lblAge: "الفئة العمرية",
+        lblWeek: "رقم الأسبوع",
+        lblIntro: "المقدمة",
+        lblObjectives: "الأهداف",
+        lblSummary: "الملخص",
+        lblMethod: "المنهجية",
+        lblResources: "الموارد",
+        lblEval: "التقييم",
+        lblAssign: "الواجبات",
+        lblTComment: "تعليق المعلم",
+        lblSComment: "تعليق المشرف",
+
+        // Placeholders
+        phSubject: "اختر المادة",
+        phTopic: "أدخل موضوع الدرس",
+        phIntro: "مقدمة موجزة...",
+        phObj: "اذكر أهدافك هنا...",
+    }
+};
