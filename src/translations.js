@@ -14,6 +14,31 @@ export const translations = {
         hasAccount: "Already have an account? Sign in",
         signupSuccess: "Signup successful! You can now log in.",
 
+        // Landing Page
+        heroTitle: "Plan Your Lessons with Excellence",
+        heroSubtitle: "A comprehensive platform for educators to prepare, track, and organize lesson plans with ease and professionalism.",
+        startFree: "Get Started for Free",
+        dashboard: "Go to Dashboard",
+        allRights: "All rights reserved.",
+
+        // Landing Page Features
+        featuresTitle: "Why Choose LessonPlanner?",
+        feature1Title: "Intelligent Planning",
+        feature1Desc: "Guided prompts and templates to help you structure your lessons effectively.",
+        feature2Title: "Bilingual Support",
+        feature2Desc: "Seamless switching between Arabic and English with full RTL layout support.",
+        feature3Title: "Save Time",
+        feature3Desc: "Duplicate previous lessons with one click and edit only what you need.",
+        feature4Title: "Print Ready",
+        feature4Desc: "Expertly formatted print layouts that look professional and are easy to read.",
+
+        // Landing Page Testimonials
+        testimonialsTitle: "What Educators Say",
+        quote1: "This tool has completely transformed my lesson preparation. It's so easy to use!",
+        author1: "Sara Al-Farsi, Grade 4 Teacher",
+        quote2: "The RTL support is the best I've seen. My Arabic lessons look perfect.",
+        author2: "Ahmed Hassan, Arabic Specialist",
+
         // Layout
         signOut: "Sign Out",
         languageName: "English",
@@ -136,5 +161,30 @@ export const translations = {
         phTopic: "أدخل موضوع الدرس",
         phIntro: "مقدمة موجزة...",
         phObj: "اذكر أهدافك هنا...",
+
+        // Landing Page
+        heroTitle: "خطط لدروسك بإتقان",
+        heroSubtitle: "منصة شاملة للمعلمين لإعداد وتتبع وتنظيم الخطط الدرسية بسهولة واحترافية.",
+        startFree: "ابدأ الآن مجاناً",
+        dashboard: "اذهب إلى لوحة التحكم",
+        allRights: "جميع الحقوق محفوظة.",
+
+        // Landing Page Features
+        featuresTitle: "لماذا تختار مخطط الدروس؟",
+        feature1Title: "تخطيط ذكي",
+        feature1Desc: "قوالب ومطالبات إرشادية لمساعدتك في هيكلة دروسك بفعالية.",
+        feature2Title: "دعم ثنائي اللغة",
+        feature2Desc: "تبديل سلس بين العربية والإنجليزية مع دعم كامل لتخطيط RTL.",
+        feature3Title: "توفير الوقت",
+        feature3Desc: "نسخ الدروس السابقة بنقرة واحدة وتعديل ما تحتاجه فقط.",
+        feature4Title: "جاهز للطباعة",
+        feature4Desc: "تنسيقات طباعة احترافية وسهلة القراءة ومصممة بخبرة.",
+
+        // Landing Page Testimonials
+        testimonialsTitle: "ماذا يقول المعلمون",
+        quote1: "لقد أحدثت هذه الأداة تحولاً كاملاً في تحضير دروسي. إنها سهلة الاستخدام للغاية!",
+        author1: "سارة الفارس، معلمة الصف الرابع",
+        quote2: "دعم RTL هو الأفضل الذي رأيته. دروسي باللغة العربية تبدو مثالية.",
+        author2: "أحمد حسن، أخصائي لغة عربية",
     }
 };

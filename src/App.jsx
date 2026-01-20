@@ -4,6 +4,7 @@ import Layout from "./components/Layout";
 import Auth from "./components/Auth";
 import LessonList from "./components/LessonList";
 import LessonForm from "./components/LessonForm";
+import LandingPage from "./components/LandingPage";
 
 function ProtectedRoute({ children }) {
   const { session, loading } = useAuth();
@@ -19,10 +20,11 @@ function AppContent() {
 
   return (
     <Routes>
-      <Route path="/login" element={!session ? <Auth /> : <Navigate to="/" />} />
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={!session ? <Auth /> : <Navigate to="/dashboard" replace />} />
 
       <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-        <Route path="/" element={<LessonList userId={session?.user?.id} isAdmin={userRole === 'admin'} />} />
+        <Route path="/dashboard" element={<LessonList userId={session?.user?.id} isAdmin={userRole === 'admin'} />} />
         <Route path="/lessons/new" element={<LessonForm userId={session?.user?.id} mode="create" />} />
         <Route path="/lessons/:id" element={<LessonForm userId={session?.user?.id} mode="edit" />} />
         {/* We might strictly need a wrapper for 'View' mode or just reuse the edit component with readOnly prop */}

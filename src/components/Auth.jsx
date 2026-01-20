@@ -25,7 +25,7 @@ export default function Auth() {
                 });
                 if (error) throw error;
                 // Navigation handled by App/AuthContext state change or explicit navigate
-                navigate("/");
+                navigate("/dashboard");
             } else {
                 // SIGNUP
                 // 1. Pass metadata to Auth immediately
