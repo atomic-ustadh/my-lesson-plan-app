@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 
 export default function Auth() {
+    const location = useLocation();
     const [isLogin, setIsLogin] = useState(true);
+
+    useEffect(() => {
+        if (location.state?.mode === 'signup') {
+            setIsLogin(false);
+        }
+    }, [location.state]);
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [fullName, setFullName] = useState(""); // For signup

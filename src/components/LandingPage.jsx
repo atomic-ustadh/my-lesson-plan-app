@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 
 export default function LandingPage() {
     const navigate = useNavigate();
-    const { t, language } = useLanguage();
+    const { t, toggleLanguage, language } = useLanguage();
     const { session } = useAuth();
 
     const features = [
@@ -29,7 +29,15 @@ export default function LandingPage() {
                     <span className="text-3xl">📝</span>
                     <h1 className="text-2xl font-bold text-emerald-800 tracking-wide">{t("appTitle")}</h1>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex items-center gap-4">
+                    {/* Language Toggle */}
+                    <button
+                        onClick={toggleLanguage}
+                        className="text-sm font-medium text-emerald-700 hover:text-emerald-800 px-3 py-1 border border-emerald-200 rounded-full bg-white/50 backdrop-blur-sm shadow-sm hover:bg-emerald-50 transition-colors hidden sm:block"
+                    >
+                        {language === "en" ? "🇮🇶 العربية" : "🇺🇸 English"}
+                    </button>
+
                     {session ? (
                         <button
                             onClick={() => navigate("/dashboard")}
@@ -46,7 +54,7 @@ export default function LandingPage() {
                                 {t("signIn")}
                             </button>
                             <button
-                                onClick={() => navigate("/login")}
+                                onClick={() => navigate("/login", { state: { mode: 'signup' } })}
                                 className="px-5 py-2 rounded-full bg-emerald-700 text-white font-semibold shadow-lg hover:bg-emerald-800 transition-transform transform hover:-translate-y-0.5"
                             >
                                 {t("signUp")}
@@ -90,7 +98,7 @@ export default function LandingPage() {
                         ) : (
                             <>
                                 <button
-                                    onClick={() => navigate("/login")}
+                                    onClick={() => navigate("/login", { state: { mode: 'signup' } })}
                                     className="px-10 py-5 rounded-full bg-emerald-700 text-white text-xl font-bold shadow-xl hover:bg-emerald-800 transition-all hover:scale-105"
                                 >
                                     {t("startFree")}
