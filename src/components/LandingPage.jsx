@@ -20,6 +20,7 @@ export default function LandingPage() {
     ];
 
     const isRtl = language === 'ar';
+    const headerFont = isRtl ? "font-header" : "font-bold";
 
     return (
         <div className={`min-h-screen flex flex-col bg-[#FDFBF7] text-gray-800 transition-colors duration-300 ${language === 'ar' ? 'font-rtl' : 'font-ltr'}`}>
@@ -27,7 +28,7 @@ export default function LandingPage() {
             <header className="w-full py-6 px-4 md:px-8 flex justify-between items-center max-w-7xl mx-auto z-20">
                 <div className="flex items-center gap-2">
                     <span className="text-3xl">📝</span>
-                    <h1 className="text-2xl text-emerald-800 tracking-wide font-header">{t("appTitle")}</h1>
+                    <h1 className={`text-2xl text-emerald-800 tracking-wide ${headerFont}`}>{t("appTitle")}</h1>
                 </div>
                 <div className="flex items-center gap-4">
                     {/* Language Toggle */}
@@ -80,7 +81,7 @@ export default function LandingPage() {
                 </div>
 
                 <div className="z-10 max-w-4xl space-y-8 animate-fade-in">
-                    <h1 className="text-5xl md:text-8xl text-emerald-900 leading-tight font-header">
+                    <h1 className={`text-5xl md:text-8xl text-emerald-900 leading-tight ${headerFont}`}>
                         {t("heroTitle")}
                     </h1>
                     <p className="text-xl md:text-2xl text-emerald-700/80 leading-relaxed font-light max-w-2xl mx-auto">
@@ -118,7 +119,7 @@ export default function LandingPage() {
             {/* Features Section */}
             <section className="py-24 bg-white px-4 md:px-8">
                 <div className="max-w-7xl mx-auto">
-                    <h2 className="text-3xl md:text-5xl text-center text-emerald-900 mb-16 underline decoration-emerald-200 decoration-4 underline-offset-8 font-header">
+                    <h2 className={`text-3xl md:text-5xl text-center text-emerald-900 mb-16 underline decoration-emerald-200 decoration-4 underline-offset-8 ${headerFont}`}>
                         {t("featuresTitle")}
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -136,7 +137,7 @@ export default function LandingPage() {
             {/* Testimonials Section */}
             <section className="py-24 bg-emerald-900 text-white px-4 md:px-8 relative overflow-hidden">
                 <div className="max-w-5xl mx-auto relative z-10 text-center">
-                    <h2 className="text-3xl md:text-5xl mb-16 font-header">
+                    <h2 className={`text-3xl md:text-5xl mb-16 ${headerFont}`}>
                         {t("testimonialsTitle")}
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-start">
@@ -156,7 +157,7 @@ export default function LandingPage() {
             {/* Final CTA */}
             {!session && (
                 <section className="py-20 text-center px-4">
-                    <h2 className="text-3xl text-emerald-900 mb-8 font-header">{t("startFree")}</h2>
+                    <h2 className={`text-3xl text-emerald-900 mb-8 ${headerFont}`}>{t("startFree")}</h2>
                     <button
                         onClick={() => navigate("/login")}
                         className="px-12 py-5 rounded-full bg-emerald-700 text-white text-xl font-semibold shadow-2xl hover:bg-emerald-800 transition-all hover:scale-110"
