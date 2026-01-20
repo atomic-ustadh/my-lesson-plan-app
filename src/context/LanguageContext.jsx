@@ -6,7 +6,7 @@ const LanguageContext = createContext();
 export function LanguageProvider({ children }) {
     // Read from localStorage or default to english
     const [language, setLanguage] = useState(() => {
-        return localStorage.getItem("app_language") || "en";
+        return localStorage.getItem("app_language") || "ar";
     });
 
     const direction = language === "ar" ? "rtl" : "ltr";
