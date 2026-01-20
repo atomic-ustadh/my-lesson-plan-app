@@ -59,7 +59,7 @@ export default function LessonList({
   if (loading) return <div className="text-center py-10 text-gray-500">Loading lessons...</div>;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-auto">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900">
           {isAdmin ? "All Lesson Plans" : "My Lessons"}
@@ -74,7 +74,7 @@ export default function LessonList({
         )}
       </div>
 
-      <div className="bg-white shadow rounded-lg overflow-hidden">
+      <div className="bg-white w-full shadow rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">

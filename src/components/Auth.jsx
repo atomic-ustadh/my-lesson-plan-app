@@ -68,8 +68,8 @@ export default function Auth() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-            <div className="max-w-md w-full bg-white rounded-lg shadow-xl overflow-hidden">
+        <div className="min-h-screen flex items-center justify-center bg-red-100 px-4">
+            <div className="max-w-md w-full bg-green-100 rounded-lg shadow-xl overflow-hidden">
                 <div className="px-6 py-8">
                     <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
                         {isLogin ? "Welcome Back" : "Create Account"}
