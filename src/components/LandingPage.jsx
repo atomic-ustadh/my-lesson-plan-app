@@ -22,12 +22,12 @@ export default function LandingPage() {
     const isRtl = language === 'ar';
 
     return (
-        <div className="min-h-screen flex flex-col bg-[#FDFBF7] text-gray-800 font-sans transition-colors duration-300">
+        <div className={`min-h-screen flex flex-col bg-[#FDFBF7] text-gray-800 transition-colors duration-300 ${language === 'ar' ? 'font-rtl' : 'font-ltr'}`}>
             {/* Navigation / Header */}
             <header className="w-full py-6 px-4 md:px-8 flex justify-between items-center max-w-7xl mx-auto z-20">
                 <div className="flex items-center gap-2">
                     <span className="text-3xl">📝</span>
-                    <h1 className="text-2xl font-bold text-emerald-800 tracking-wide">{t("appTitle")}</h1>
+                    <h1 className="text-2xl text-emerald-800 tracking-wide font-header">{t("appTitle")}</h1>
                 </div>
                 <div className="flex items-center gap-4">
                     {/* Language Toggle */}
@@ -41,7 +41,7 @@ export default function LandingPage() {
                     {session ? (
                         <button
                             onClick={() => navigate("/dashboard")}
-                            className="px-5 py-2 rounded-full bg-emerald-700 text-white font-semibold shadow-lg hover:bg-emerald-800 transition-all"
+                            className="px-5 py-2 rounded-full bg-emerald-700 text-white font-medium shadow-lg hover:bg-emerald-800 transition-all"
                         >
                             {t("dashboard")}
                         </button>
@@ -49,13 +49,13 @@ export default function LandingPage() {
                         <>
                             <button
                                 onClick={() => navigate("/login")}
-                                className="px-5 py-2 rounded-full text-emerald-800 font-semibold border border-emerald-200 hover:bg-emerald-50 transition-colors"
+                                className="px-5 py-2 rounded-full text-emerald-800 font-medium border border-emerald-200 hover:bg-emerald-50 transition-colors"
                             >
                                 {t("signIn")}
                             </button>
                             <button
                                 onClick={() => navigate("/login", { state: { mode: 'signup' } })}
-                                className="px-5 py-2 rounded-full bg-emerald-700 text-white font-semibold shadow-lg hover:bg-emerald-800 transition-transform transform hover:-translate-y-0.5"
+                                className="px-5 py-2 rounded-full bg-emerald-700 text-white font-medium shadow-lg hover:bg-emerald-800 transition-transform transform hover:-translate-y-0.5"
                             >
                                 {t("signUp")}
                             </button>
@@ -80,7 +80,7 @@ export default function LandingPage() {
                 </div>
 
                 <div className="z-10 max-w-4xl space-y-8 animate-fade-in">
-                    <h1 className="text-5xl md:text-8xl font-extrabold text-emerald-900 leading-tight">
+                    <h1 className="text-5xl md:text-8xl text-emerald-900 leading-tight font-header">
                         {t("heroTitle")}
                     </h1>
                     <p className="text-xl md:text-2xl text-emerald-700/80 leading-relaxed font-light max-w-2xl mx-auto">
@@ -91,7 +91,7 @@ export default function LandingPage() {
                         {session ? (
                             <button
                                 onClick={() => navigate("/dashboard")}
-                                className="px-10 py-5 rounded-full bg-emerald-700 text-white text-xl font-bold shadow-xl hover:bg-emerald-800 transition-all hover:scale-105"
+                                className="px-10 py-5 rounded-full bg-emerald-700 text-white text-xl font-semibold shadow-xl hover:bg-emerald-800 transition-all hover:scale-105"
                             >
                                 {t("dashboard")}
                             </button>
@@ -99,13 +99,13 @@ export default function LandingPage() {
                             <>
                                 <button
                                     onClick={() => navigate("/login", { state: { mode: 'signup' } })}
-                                    className="px-10 py-5 rounded-full bg-emerald-700 text-white text-xl font-bold shadow-xl hover:bg-emerald-800 transition-all hover:scale-105"
+                                    className="px-10 py-5 rounded-full bg-emerald-700 text-white text-xl font-semibold shadow-xl hover:bg-emerald-800 transition-all hover:scale-105"
                                 >
                                     {t("startFree")}
                                 </button>
                                 <button
                                     onClick={() => navigate("/login")}
-                                    className="px-10 py-5 rounded-full bg-white text-emerald-800 text-xl font-bold shadow-md border border-emerald-100 hover:bg-emerald-50 transition-all hover:scale-105"
+                                    className="px-10 py-5 rounded-full bg-white text-emerald-800 text-xl font-semibold shadow-md border border-emerald-100 hover:bg-emerald-50 transition-all hover:scale-105"
                                 >
                                     {t("signIn")}
                                 </button>
@@ -118,14 +118,14 @@ export default function LandingPage() {
             {/* Features Section */}
             <section className="py-24 bg-white px-4 md:px-8">
                 <div className="max-w-7xl mx-auto">
-                    <h2 className="text-3xl md:text-5xl font-bold text-center text-emerald-900 mb-16 underline decoration-emerald-200 decoration-4 underline-offset-8">
+                    <h2 className="text-3xl md:text-5xl text-center text-emerald-900 mb-16 underline decoration-emerald-200 decoration-4 underline-offset-8 font-header">
                         {t("featuresTitle")}
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {features.map((f, i) => (
                             <div key={i} className="p-8 rounded-2xl bg-[#FDFBF7] border border-emerald-50 hover:shadow-xl transition-shadow duration-300 group">
                                 <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">{f.icon}</div>
-                                <h3 className="text-xl font-bold text-emerald-800 mb-4">{f.title}</h3>
+                                <h3 className="text-xl font-semibold text-emerald-800 mb-4">{f.title}</h3>
                                 <p className="text-emerald-700/70 leading-relaxed">{f.desc}</p>
                             </div>
                         ))}
@@ -136,14 +136,14 @@ export default function LandingPage() {
             {/* Testimonials Section */}
             <section className="py-24 bg-emerald-900 text-white px-4 md:px-8 relative overflow-hidden">
                 <div className="max-w-5xl mx-auto relative z-10 text-center">
-                    <h2 className="text-3xl md:text-5xl font-bold mb-16">
+                    <h2 className="text-3xl md:text-5xl mb-16 font-header">
                         {t("testimonialsTitle")}
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-start">
                         {testimonials.map((t, i) => (
                             <div key={i} className="bg-emerald-800/50 p-8 rounded-2xl border border-emerald-700">
                                 <p className="text-xl italic mb-6 leading-relaxed">"{t.quote}"</p>
-                                <p className="font-bold text-emerald-300">— {t.author}</p>
+                                <p className="font-medium text-emerald-300">— {t.author}</p>
                             </div>
                         ))}
                     </div>
@@ -156,10 +156,10 @@ export default function LandingPage() {
             {/* Final CTA */}
             {!session && (
                 <section className="py-20 text-center px-4">
-                    <h2 className="text-3xl font-bold text-emerald-900 mb-8">{t("startFree")}</h2>
+                    <h2 className="text-3xl text-emerald-900 mb-8 font-header">{t("startFree")}</h2>
                     <button
                         onClick={() => navigate("/login")}
-                        className="px-12 py-5 rounded-full bg-emerald-700 text-white text-xl font-bold shadow-2xl hover:bg-emerald-800 transition-all hover:scale-110"
+                        className="px-12 py-5 rounded-full bg-emerald-700 text-white text-xl font-semibold shadow-2xl hover:bg-emerald-800 transition-all hover:scale-110"
                     >
                         {t("signUp")}
                     </button>

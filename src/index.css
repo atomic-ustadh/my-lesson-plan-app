@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Oi&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 @import "tailwindcss";
 
 @theme {
     --font-ubuntu: "Ubuntu", sans-serif;
     --font-arabic: "Amiri", serif;
+    --font-oi: "Oi", serif;
 }
 
 .font-ltr {
@@ -12,4 +13,8 @@
 
 .font-rtl {
     font-family: var(--font-arabic);
+}
+
+.font-header {
+    font-family: var(--font-oi);
 }
