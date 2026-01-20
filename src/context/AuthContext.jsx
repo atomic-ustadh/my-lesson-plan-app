@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
         // 1. Check active session
         supabase.auth.getSession().then(({ data: { session } }) => {
             setSession(session);
-            if (session) fetchProfile(session.user.id);
+            if (session) fetchProfile(session.user.id, session.user);
             else setLoading(false);
         });
 
@@ -23,7 +23,7 @@ export function AuthProvider({ children }) {
         } = supabase.auth.onAuthStateChange((_event, session) => {
             setSession(session);
             if (session) {
-                fetchProfile(session.user.id);
+                fetchProfile(session.user.id, session.user);
             } else {
                 setUserRole(null);
                 setUserName("");
@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
         return () => subscription.unsubscribe();
     }, []);
 
-    async function fetchProfile(userId) {
+    async function fetchProfile(userId, sessionUser) {
         try {
             const { data, error } = await supabase
                 .from("profiles")
@@ -43,17 +43,24 @@ export function AuthProvider({ children }) {
                 .single();
 
             if (error) {
-                // If profile doesn't exist yet (e.g. just signed up), we might want to create one or wait
-                // For now, default to teacher
+                // Fallback: Use metadata from the session user object if DB fetch fails
                 console.warn("Profile fetch warning:", error.message);
-                setUserRole("teacher");
-                setUserName("Teacher");
+                const metaName = sessionUser?.user_metadata?.full_name;
+
+                setUserRole("teacher"); // Default incase of error
+                setUserName(metaName || "Teacher");
             } else {
+                const dbName = data?.full_name;
+                const metaName = sessionUser?.user_metadata?.full_name;
+
                 setUserRole(data?.role || "teacher");
-                setUserName(data?.full_name || "Teacher");
+                // Prefer DB name, fallback to Auth metadata, then default string
+                setUserName(dbName || metaName || "Teacher");
             }
         } catch (err) {
             console.error("Profile fetch error:", err);
+            // Final fallback in crash
+            setUserName(sessionUser?.user_metadata?.full_name || "Teacher");
         } finally {
             setLoading(false);
         }
