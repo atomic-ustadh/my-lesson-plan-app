@@ -16,9 +16,9 @@ export default function Layout() {
     if (!session) return <Outlet />;
 
     return (
-        <div className="min-h-screen bg-gray-50 text-gray-900 font-sans transition-all duration-300">
+        <div className="min-h-screen bg-gray-50 text-gray-900 transition-all duration-300">
             {/* NAVIGATION BAR */}
-            <nav className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-10">
+            <nav className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-10 print:hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex items-center">
