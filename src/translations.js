@@ -102,6 +102,13 @@ export const translations = {
         phTopic: "Enter lesson topic",
         phIntro: "Brief introduction...",
         phObj: "List your objectives...",
+
+        // Error Pages
+        err404Title: "Oops! Page Not Found",
+        err404Desc: "The page you are looking for might have been moved, deleted, or never existed.",
+        err500Title: "Server Error",
+        err500Desc: "Something went wrong on our end. Please try again later.",
+        btnBackHome: "Back to Home",
     },
     ar: {
         // Auth
@@ -206,5 +213,12 @@ export const translations = {
         author1: "سارة الفارس، معلمة الصف الرابع",
         quote2: "دعم RTL هو الأفضل الذي رأيته. دروسي باللغة العربية تبدو مثالية.",
         author2: "أحمد حسن، أخصائي لغة عربية",
+
+        // Error Pages
+        err404Title: "عذراً! الصفحة غير موجودة",
+        err404Desc: "ربما تم نقل الصفحة التي تبحث عنها، أو حذفها، أو أنها لم تكن موجودة أبداً.",
+        err500Title: "خطأ في الخادم",
+        err500Desc: "حدث خطأ ما من جانبنا. يرجى المحاولة مرة أخرى لاحقاً.",
+        btnBackHome: "العودة للرئيسية",
     }
 };

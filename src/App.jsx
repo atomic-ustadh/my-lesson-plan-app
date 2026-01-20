@@ -5,6 +5,7 @@ import Auth from "./components/Auth";
 import LessonList from "./components/LessonList";
 import LessonForm from "./components/LessonForm";
 import LandingPage from "./components/LandingPage";
+import ErrorPage from "./components/ErrorPage";
 
 function ProtectedRoute({ children }) {
   const { session, loading } = useAuth();
@@ -30,7 +31,7 @@ function AppContent() {
         {/* We might strictly need a wrapper for 'View' mode or just reuse the edit component with readOnly prop */}
       </Route>
 
-      <Route path="*" element={<Navigate to="/" />} />
+      <Route path="*" element={<ErrorPage code="404" />} />
     </Routes>
   );
 }
