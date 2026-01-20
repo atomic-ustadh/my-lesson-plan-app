@@ -171,7 +171,7 @@ export default function LessonForm({ userId, onSave }) {
 
           {/* Subject */}
           <div className="col-span-1 md:col-span-2 print:col-span-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block">{t("lblSubject")} <span className="text-red-500 print:hidden">*</span></label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblSubject")} <span className="text-red-500 print:hidden">*</span></label>
             <select
               disabled={isReadOnly}
               value={formData.subject}
@@ -188,7 +188,7 @@ export default function LessonForm({ userId, onSave }) {
 
           {/* Topic */}
           <div className="col-span-1 md:col-span-2 print:col-span-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block">{t("lblTopic")} <span className="text-red-500 print:hidden">*</span></label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblTopic")} <span className="text-red-500 print:hidden">*</span></label>
             <input
               type="text"
               disabled={isReadOnly}
@@ -202,7 +202,7 @@ export default function LessonForm({ userId, onSave }) {
 
           {/* Week */}
           <div className="col-span-1 print:col-span-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block">{t("lblWeek")}</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblWeek")}</label>
             <input
               type="number"
               disabled={isReadOnly}
@@ -214,7 +214,7 @@ export default function LessonForm({ userId, onSave }) {
 
           {/* Date */}
           <div className="col-span-1 print:col-span-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block">{t("lblDate")}</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblDate")}</label>
             <input
               type="date"
               disabled={isReadOnly}
@@ -229,7 +229,7 @@ export default function LessonForm({ userId, onSave }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 print:gap-4 print:grid-cols-4">
           {/* Duration */}
           <div className="col-span-1 print:col-span-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block">{t("lblDuration")}</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblDuration")}</label>
             <input
               type="number"
               disabled={isReadOnly}
@@ -241,7 +241,7 @@ export default function LessonForm({ userId, onSave }) {
 
           {/* Grade */}
           <div className="col-span-1 print:col-span-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block">{t("lblGrade")}</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblGrade")}</label>
             <select
               disabled={isReadOnly}
               value={formData.grade}
@@ -257,7 +257,7 @@ export default function LessonForm({ userId, onSave }) {
 
           {/* Period */}
           <div className="col-span-1 print:col-span-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block">{t("lblPeriod")}</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblPeriod")}</label>
             <input
               type="text"
               disabled={isReadOnly}
@@ -269,7 +269,7 @@ export default function LessonForm({ userId, onSave }) {
 
           {/* Age */}
           <div className="col-span-1 print:col-span-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block">{t("lblAge")}</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblAge")}</label>
             <input
               type="text"
               disabled={isReadOnly}
@@ -285,7 +285,7 @@ export default function LessonForm({ userId, onSave }) {
         {/* SECTION 2: Core Content */}
         <div className="space-y-6 print:space-y-2">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block">{t("lblIntro")}</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblIntro")}</label>
             <textarea
               rows={3}
               disabled={isReadOnly}
@@ -298,7 +298,7 @@ export default function LessonForm({ userId, onSave }) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block">{t("lblObjectives")}</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblObjectives")}</label>
             <textarea
               rows={4}
               disabled={isReadOnly}
@@ -311,7 +311,7 @@ export default function LessonForm({ userId, onSave }) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block">{t("lblSummary")}</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblSummary")}</label>
             <textarea
               rows={3}
               disabled={isReadOnly}
@@ -323,7 +323,7 @@ export default function LessonForm({ userId, onSave }) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block">{t("lblMethod")}</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblMethod")}</label>
             <textarea
               rows={3}
               disabled={isReadOnly}
@@ -335,7 +335,7 @@ export default function LessonForm({ userId, onSave }) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block">{t("lblResources")}</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblResources")}</label>
             <textarea
               rows={2}
               disabled={isReadOnly}
@@ -347,7 +347,7 @@ export default function LessonForm({ userId, onSave }) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block">{t("lblEval")}</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblEval")}</label>
             <textarea
               rows={2}
               disabled={isReadOnly}
@@ -359,7 +359,7 @@ export default function LessonForm({ userId, onSave }) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block">{t("lblAssign")}</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblAssign")}</label>
             <textarea
               rows={2}
               disabled={isReadOnly}
@@ -376,7 +376,7 @@ export default function LessonForm({ userId, onSave }) {
         {/* SECTION 3: Comments (Admin Only or Read Only) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 print:grid-cols-1 print:gap-4">
           <div className="print:flex print:items-baseline print:gap-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:shrink-0">{t("lblTComment")}</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit print:shrink-0">{t("lblTComment")}</label>
             <textarea
               rows={2}
               disabled={isReadOnly}
@@ -387,7 +387,7 @@ export default function LessonForm({ userId, onSave }) {
             <div className="hidden print:block text-black whitespace-pre-wrap text-sm print:flex-1">{formData.teacherComment}</div>
           </div>
           <div className="print:flex print:items-baseline print:gap-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:shrink-0">{t("lblSComment")}</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit print:shrink-0">{t("lblSComment")}</label>
             <textarea
               rows={2}
               disabled={isReadOnly}
