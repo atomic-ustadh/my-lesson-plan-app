@@ -10,7 +10,7 @@ export default function Auth() {
     const [fullName, setFullName] = useState(""); // For signup
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const { t } = useLanguage();
+    const { t, toggleLanguage, language } = useLanguage();
 
     const handleAuth = async (e) => {
         e.preventDefault();
@@ -70,7 +70,15 @@ export default function Auth() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 relative">
+            {/* Language Toggle */}
+            <button
+                onClick={toggleLanguage}
+                className="absolute top-4 end-4 text-sm font-medium text-gray-600 hover:text-blue-600 px-3 py-1 border rounded-md bg-white shadow-sm hover:bg-gray-50 transition-colors"
+            >
+                {language === "en" ? "🇮🇶 العربية" : "🇺🇸 English"}
+            </button>
+
             <div className="max-w-md w-full bg-white rounded-lg shadow-xl overflow-hidden">
                 <div className="px-6 py-8">
                     <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
