@@ -204,7 +204,7 @@ export default function LessonForm({ userId, onSave }) {
           <div className="col-span-1 print:col-span-1">
             <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblWeek")}</label>
             <input
-              type="number"
+              type="text"
               disabled={isReadOnly}
               value={formData.week}
               onChange={(e) => setFormData({ ...formData, week: e.target.value })}
@@ -231,7 +231,7 @@ export default function LessonForm({ userId, onSave }) {
           <div className="col-span-1 print:col-span-1">
             <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblDuration")}</label>
             <input
-              type="number"
+              type="text"
               disabled={isReadOnly}
               value={formData.duration}
               onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
@@ -271,7 +271,7 @@ export default function LessonForm({ userId, onSave }) {
           <div className="col-span-1 print:col-span-1">
             <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblAge")}</label>
             <input
-              type="text"
+              type="number"
               disabled={isReadOnly}
               value={formData.age}
               onChange={(e) => setFormData({ ...formData, age: e.target.value })}
