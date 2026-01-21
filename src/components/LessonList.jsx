@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
-import { SUBJECTS } from "../constants";
+import { SUBJECTS, WEEKS } from "../constants";
 
 export default function LessonList({ userId, isAdmin, refreshKey, onAction }) {
   const [lessons, setLessons] = useState([]);
@@ -11,9 +11,9 @@ export default function LessonList({ userId, isAdmin, refreshKey, onAction }) {
   const [filterWeek, setFilterWeek] = useState("");
   const [filterTeacher, setFilterTeacher] = useState("");
 
-  const [uniqueWeeks, setUniqueWeeks] = useState([]);
   const [uniqueTeachers, setUniqueTeachers] = useState([]);
   const subjects = SUBJECTS;
+  const weeks = WEEKS;
 
   const navigate = useNavigate();
   const { t } = useLanguage();
@@ -27,17 +27,7 @@ export default function LessonList({ userId, isAdmin, refreshKey, onAction }) {
   }, [isAdmin]);
 
   const fetchFilterOptions = async () => {
-    // 1. Fetch unique weeks
-    const { data: lessonData } = await supabase
-      .from("lesson_plans")
-      .select("content->week");
-
-    if (lessonData) {
-      const weeks = [...new Set(lessonData.map(item => item.week).filter(Boolean))].sort();
-      setUniqueWeeks(weeks);
-    }
-
-    // 2. Fetch unique teachers (if Admin)
+    // 1. Fetch unique teachers (if Admin)
     if (isAdmin) {
       const { data: teachersData } = await supabase
         .from("profiles")
@@ -126,7 +116,7 @@ export default function LessonList({ userId, isAdmin, refreshKey, onAction }) {
               className="text-sm border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 py-1 bg-white"
             >
               <option value="">{t("filterAllWeeks")}</option>
-              {uniqueWeeks.map(w => <option key={w} value={w}>{w}</option>)}
+              {weeks.map(w => <option key={w} value={w}>{w}</option>)}
             </select>
 
             {/* Teacher Filter (Admin Only) */}

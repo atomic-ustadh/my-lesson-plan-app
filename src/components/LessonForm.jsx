@@ -1,6 +1,6 @@
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
-import { SUBJECTS, GRADES } from "../constants";
+import { SUBJECTS, GRADES, WEEKS } from "../constants";
 
 export default function LessonForm({ userId, onSave }) {
   const { id } = useParams();
@@ -37,6 +37,7 @@ export default function LessonForm({ userId, onSave }) {
 
   const subjects = SUBJECTS;
   const classes = GRADES;
+  const weeks = WEEKS;
 
   useEffect(() => {
     if (id) {
@@ -189,13 +190,17 @@ export default function LessonForm({ userId, onSave }) {
           {/* Week */}
           <div className="col-span-1 print:col-span-1">
             <label className="block text-sm font-medium text-gray-700 mb-1 print:bg-gray-100 print:rounded-md print:px-2 print:py-1 print:text-base print:font-bold print:inline-block print:w-fit">{t("lblWeek")}</label>
-            <input
-              type="text"
+            <select
               disabled={isReadOnly}
               value={formData.week}
               onChange={(e) => setFormData({ ...formData, week: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:text-gray-500 print:border-none print:bg-transparent print:p-0 print:text-black print:shadow-none"
-            />
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:text-gray-500 print:border-none print:bg-transparent print:p-0 print:text-black print:shadow-none print:appearance-none"
+            >
+              <option value="">Select Week</option>
+              {weeks.map((w) => (
+                <option key={w} value={w}>{w}</option>
+              ))}
+            </select>
           </div>
 
           {/* Date */}
