@@ -56,16 +56,6 @@ export default function Auth() {
                     }
                 });
                 if (error) throw error;
-
-                if (data.user) {
-                    await supabase.from("profiles").upsert([
-                        {
-                            id: data.user.id,
-                            full_name: fullName,
-                            role: "teacher",
-                        },
-                    ]);
-                }
                 setMessage({ type: "success", text: t("signupSuccess") });
                 setView("login");
             } else if (view === "forgot") {
