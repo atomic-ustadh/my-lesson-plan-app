@@ -112,28 +112,24 @@ export default function LessonList({ userId, isAdmin, refreshKey, onAction }) {
                         {t("btnView")}
                       </button>
 
-                      {!isAdmin && (
-                        <>
-                          <button
-                            onClick={() => navigate(`/lessons/${lesson.id}?edit=true`)}
-                            className="text-indigo-600 hover:text-indigo-900 me-4"
-                          >
-                            {t("btnEdit")}
-                          </button>
-                          <button
-                            onClick={() => handleDuplicate(lesson)}
-                            className="text-gray-600 hover:text-gray-900 me-4"
-                          >
-                            {t("btnCopy")}
-                          </button>
-                          <button
-                            onClick={() => handleDelete(lesson.id)}
-                            className="text-red-600 hover:text-red-900"
-                          >
-                            {t("btnDelete")}
-                          </button>
-                        </>
-                      )}
+                      <button
+                        onClick={() => navigate(`/lessons/${lesson.id}?edit=true`)}
+                        className="text-indigo-600 hover:text-indigo-900 me-4"
+                      >
+                        {t("btnEdit")}
+                      </button>
+                      <button
+                        onClick={() => handleDuplicate(lesson)}
+                        className="text-gray-600 hover:text-gray-900 me-4"
+                      >
+                        {t("btnCopy")}
+                      </button>
+                      <button
+                        onClick={() => handleDelete(lesson.id)}
+                        className="text-red-600 hover:text-red-900"
+                      >
+                        {t("btnDelete")}
+                      </button>
                     </td>
                   </tr>
                 ))
