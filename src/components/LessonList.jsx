@@ -2,16 +2,53 @@ import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
+import { SUBJECTS } from "../constants";
 
 export default function LessonList({ userId, isAdmin, refreshKey, onAction }) {
   const [lessons, setLessons] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filterSubject, setFilterSubject] = useState("");
+  const [filterWeek, setFilterWeek] = useState("");
+  const [filterTeacher, setFilterTeacher] = useState("");
+
+  const [uniqueWeeks, setUniqueWeeks] = useState([]);
+  const [uniqueTeachers, setUniqueTeachers] = useState([]);
+  const subjects = SUBJECTS;
+
   const navigate = useNavigate();
   const { t } = useLanguage();
 
   useEffect(() => {
     fetchLessons();
-  }, [refreshKey, isAdmin]); // Refetch when refreshKey or role changes
+  }, [refreshKey, isAdmin, filterSubject, filterWeek, filterTeacher]);
+
+  useEffect(() => {
+    fetchFilterOptions();
+  }, [isAdmin]);
+
+  const fetchFilterOptions = async () => {
+    // 1. Fetch unique weeks
+    const { data: lessonData } = await supabase
+      .from("lesson_plans")
+      .select("content->week");
+
+    if (lessonData) {
+      const weeks = [...new Set(lessonData.map(item => item.week).filter(Boolean))].sort();
+      setUniqueWeeks(weeks);
+    }
+
+    // 2. Fetch unique teachers (if Admin)
+    if (isAdmin) {
+      const { data: teachersData } = await supabase
+        .from("profiles")
+        .select("full_name")
+        .eq("role", "teacher");
+
+      if (teachersData) {
+        setUniqueTeachers(teachersData.map(t => t.full_name).sort());
+      }
+    }
+  };
 
   const fetchLessons = async () => {
     setLoading(true);
@@ -24,6 +61,17 @@ export default function LessonList({ userId, isAdmin, refreshKey, onAction }) {
 
     if (!isAdmin) {
       query = query.eq("user_id", userId);
+    }
+
+    // Apply Filters
+    if (filterSubject) {
+      query = query.eq("subject", filterSubject);
+    }
+    if (filterWeek) {
+      query = query.eq("content->week", filterWeek);
+    }
+    if (isAdmin && filterTeacher) {
+      query = query.filter("profiles.full_name", "eq", filterTeacher);
     }
 
     const { data, error } = await query;
@@ -52,18 +100,70 @@ export default function LessonList({ userId, isAdmin, refreshKey, onAction }) {
 
   return (
     <div className="space-y-6 w-auto">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <h1 className="text-2xl font-bold text-gray-900">
           {isAdmin ? t("allLessons") : t("myLessons")}
         </h1>
-        {!isAdmin && (
-          <button
-            onClick={() => navigate("/lessons/new")}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shadow-sm"
-          >
-            {t("newLesson")}
-          </button>
-        )}
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Filter UI */}
+          <div className="flex flex-wrap items-center gap-2 bg-gray-100 p-2 rounded-lg border border-gray-200 shadow-inner">
+            <span className="text-xs font-semibold text-gray-400 px-2 uppercase tracking-wider">{t("filterTitle")}</span>
+
+            {/* Subject Filter */}
+            <select
+              value={filterSubject}
+              onChange={(e) => setFilterSubject(e.target.value)}
+              className="text-sm border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 py-1 bg-white"
+            >
+              <option value="">{t("filterAllSubjects")}</option>
+              {subjects.map(s => <option key={s} value={s}>{s}</option>)}
+            </select>
+
+            {/* Week Filter */}
+            <select
+              value={filterWeek}
+              onChange={(e) => setFilterWeek(e.target.value)}
+              className="text-sm border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 py-1 bg-white"
+            >
+              <option value="">{t("filterAllWeeks")}</option>
+              {uniqueWeeks.map(w => <option key={w} value={w}>{w}</option>)}
+            </select>
+
+            {/* Teacher Filter (Admin Only) */}
+            {isAdmin && (
+              <select
+                value={filterTeacher}
+                onChange={(e) => setFilterTeacher(e.target.value)}
+                className="text-sm border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 py-1 bg-white"
+              >
+                <option value="">{t("filterAllTeachers")}</option>
+                {uniqueTeachers.map(name => <option key={name} value={name}>{name}</option>)}
+              </select>
+            )}
+
+            {(filterSubject || filterWeek || (isAdmin && filterTeacher)) && (
+              <button
+                onClick={() => {
+                  setFilterSubject("");
+                  setFilterWeek("");
+                  setFilterTeacher("");
+                }}
+                className="text-xs text-emerald-600 hover:text-emerald-700 font-medium px-2 underline underline-offset-4"
+              >
+                {t("filterClear")}
+              </button>
+            )}
+          </div>
+
+          {!isAdmin && (
+            <button
+              onClick={() => navigate("/lessons/new")}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shadow-sm"
+            >
+              {t("newLesson")}
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="bg-white w-full shadow rounded-lg overflow-hidden">
@@ -118,12 +218,14 @@ export default function LessonList({ userId, isAdmin, refreshKey, onAction }) {
                       >
                         {t("btnEdit")}
                       </button>
-                      <button
-                        onClick={() => handleDuplicate(lesson)}
-                        className="text-gray-600 hover:text-gray-900 me-4"
-                      >
-                        {t("btnCopy")}
-                      </button>
+                      {!isAdmin && (
+                        <button
+                          onClick={() => handleDuplicate(lesson)}
+                          className="text-gray-600 hover:text-gray-900 me-4"
+                        >
+                          {t("btnCopy")}
+                        </button>
+                      )}
                       <button
                         onClick={() => handleDelete(lesson.id)}
                         className="text-red-600 hover:text-red-900"

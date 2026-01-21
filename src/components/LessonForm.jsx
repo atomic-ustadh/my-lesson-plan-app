@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-import { supabase } from "../supabaseClient";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
+import { SUBJECTS, GRADES } from "../constants";
 
 export default function LessonForm({ userId, onSave }) {
   const { id } = useParams();
@@ -36,20 +35,8 @@ export default function LessonForm({ userId, onSave }) {
     supervisorComment: "",
   });
 
-  const subjects = [
-    "Quran",
-    "Islamic Studies",
-    "Arabic",
-    "English",
-    "Mathematics",
-    "Science",
-    "Social Studies",
-    "Computer Science",
-    "Art",
-    "PE",
-  ];
-
-  const classes = ["Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12"];
+  const subjects = SUBJECTS;
+  const classes = GRADES;
 
   useEffect(() => {
     if (id) {
@@ -92,7 +79,6 @@ export default function LessonForm({ userId, onSave }) {
     if (isView) return;
 
     const payload = {
-      user_id: userId, // Ensure userId is passed/available
       subject: formData.subject,
       title: formData.topic,
       grade_level: formData.grade,

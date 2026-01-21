@@ -109,6 +109,13 @@ export const translations = {
         err500Title: "Server Error",
         err500Desc: "Something went wrong on our end. Please try again later.",
         btnBackHome: "Back to Home",
+
+        // Filters
+        filterAllTeachers: "All Teachers",
+        filterAllSubjects: "All Subjects",
+        filterAllWeeks: "All Weeks",
+        filterTitle: "Filters",
+        filterClear: "Clear Filters",
     },
     ar: {
         // Auth
@@ -220,5 +227,12 @@ export const translations = {
         err500Title: "خطأ في الخادم",
         err500Desc: "حدث خطأ ما من جانبنا. يرجى المحاولة مرة أخرى لاحقاً.",
         btnBackHome: "العودة للرئيسية",
+
+        // Filters
+        filterAllTeachers: "جميع المعلمين",
+        filterAllSubjects: "جميع المواد",
+        filterAllWeeks: "جميع الأسابيع",
+        filterTitle: "تصفية",
+        filterClear: "مسح التصفية",
     }
 };
