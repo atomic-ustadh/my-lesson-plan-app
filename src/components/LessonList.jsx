@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
-import { SUBJECTS, WEEKS } from "../constants";
+import { getSubjects, getWeeks } from "../constants";
 
 export default function LessonList({ userId, isAdmin, refreshKey, onAction }) {
   const [lessons, setLessons] = useState([]);
@@ -12,11 +12,12 @@ export default function LessonList({ userId, isAdmin, refreshKey, onAction }) {
   const [filterTeacher, setFilterTeacher] = useState("");
 
   const [uniqueTeachers, setUniqueTeachers] = useState([]);
-  const subjects = SUBJECTS;
-  const weeks = WEEKS;
 
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+
+  const subjects = getSubjects(language);
+  const weeks = getWeeks(language);
 
   useEffect(() => {
     fetchLessons();

@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
-import { SUBJECTS, GRADES, WEEKS } from "../constants";
+import { getSubjects, getGrades, getWeeks } from "../constants";
 
 export default function LessonForm({ userId, onSave }) {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   // Determine mode: 'create', 'edit', 'view', or 'duplicate'
   const isEdit = Boolean(id && location.search.includes("edit=true"));
@@ -37,9 +37,9 @@ export default function LessonForm({ userId, onSave }) {
     supervisorComment: "",
   });
 
-  const subjects = SUBJECTS;
-  const classes = GRADES;
-  const weeks = WEEKS;
+  const subjects = getSubjects(language);
+  const classes = getGrades(language);
+  const weeks = getWeeks(language);
 
   useEffect(() => {
     if (id) {
