@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import { supabase } from "../supabaseClient";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import { SUBJECTS, GRADES, WEEKS } from "../constants";
