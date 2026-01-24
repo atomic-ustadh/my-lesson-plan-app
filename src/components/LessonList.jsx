@@ -63,7 +63,16 @@ export default function LessonList({ userId, isAdmin, refreshKey, onAction }) {
       query = query.filter("content", "cs", JSON.stringify({ week: filterWeek }));
     }
     if (isAdmin && filterTeacher) {
-      query = query.filter("profiles.full_name", "eq", filterTeacher);
+      // First, get the user_id of the selected teacher
+      const { data: teacherData } = await supabase
+        .from("profiles")
+        .select("id")
+        .eq("full_name", filterTeacher)
+        .single();
+
+      if (teacherData) {
+        query = query.eq("user_id", teacherData.id);
+      }
     }
 
     const { data, error } = await query;
