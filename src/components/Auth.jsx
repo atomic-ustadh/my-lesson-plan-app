@@ -1,224 +1,66 @@
-import { useState, useEffect } from "react";
-import { supabase } from "../supabaseClient";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useLanguage } from "../context/LanguageContext";
-import { useAuth } from "../context/AuthContext";
+import { supabase } from '../supabaseClient';
 
-export default function Auth() {
-    const location = useLocation();
-    const [view, setView] = useState("login"); // 'login' | 'signup' | 'forgot' | 'update'
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [fullName, setFullName] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState({ type: "", text: "" });
-    const navigate = useNavigate();
-    const { t, toggleLanguage, language } = useLanguage();
-    const { recoveryMode, setRecoveryMode } = useAuth();
+const Auth = () => {
+  const handleGoogleLogin = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          // You can add a redirectTo option here if you want to redirect
+          // users to a specific page after they sign in.
+          // redirectTo: window.location.origin + '/dashboard',
+        },
+      });
 
-    useEffect(() => {
-        // Handle explicit mode from location state
-        if (location.state?.mode === 'signup') {
-            setView("signup");
-        }
-    }, [location.state]);
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      console.error('Error during Google sign-in:', error.message);
+      // You could display this error to the user in a more friendly way.
+      alert('Failed to sign in with Google: ' + error.message);
+    }
+  };
 
-    useEffect(() => {
-        // If context says we are in recovery mode, show update view
-        if (recoveryMode) {
-            setView("update");
-        }
-    }, [recoveryMode]);
-
-    const handleAuth = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setMessage({ type: "", text: "" });
-
-        try {
-            if (view === "login") {
-                const { error } = await supabase.auth.signInWithPassword({
-                    email,
-                    password,
-                });
-                if (error) throw error;
-                navigate("/dashboard");
-            } else if (view === "signup") {
-                const { data, error } = await supabase.auth.signUp({
-                    email,
-                    password,
-                    options: {
-                        data: {
-                            full_name: fullName,
-                            role: 'teacher'
-                        }
-                    }
-                });
-                if (error) throw error;
-                setMessage({ type: "success", text: t("signupSuccess") });
-                setView("login");
-            } else if (view === "forgot") {
-                const { error } = await supabase.auth.resetPasswordForEmail(email, {
-                    redirectTo: `${window.location.origin}/login`,
-                });
-                if (error) throw error;
-                setMessage({ type: "success", text: t("resetSentDesc") });
-            } else if (view === "update") {
-                if (password !== confirmPassword) {
-                    throw new Error(t("passwordMismatch"));
-                }
-                const { error } = await supabase.auth.updateUser({
-                    password: password,
-                });
-                if (error) throw error;
-                setMessage({ type: "success", text: t("passwordUpdateSuccess") });
-                setRecoveryMode(false);
-                setView("login");
-            }
-        } catch (error) {
-            setMessage({ type: "error", text: error.message });
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 relative">
-            {/* Language Toggle */}
-            <button
-                onClick={toggleLanguage}
-                className="absolute top-4 end-4 text-sm font-medium text-gray-600 hover:text-blue-600 px-3 py-1 border rounded-md bg-white shadow-sm hover:bg-gray-50 transition-colors"
-            >
-                {language === "en" ? "🇮🇶 العربية" : "🇺🇸 English"}
-            </button>
-
-            <div className="max-w-md w-full bg-white rounded-lg shadow-xl overflow-hidden">
-                <div className="px-6 py-8">
-                    <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
-                        {view === "login" && t("loginTitle")}
-                        {view === "signup" && t("signupTitle")}
-                        {view === "forgot" && t("forgotPassword")}
-                        {view === "update" && t("updatePasswordBtn")}
-                    </h2>
-
-                    {message.text && (
-                        <div className={`mb-6 p-4 rounded-md text-sm ${message.type === "error" ? "bg-red-50 text-red-700 border border-red-200" : "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                            }`}>
-                            {message.text}
-                        </div>
-                    )}
-
-                    <form onSubmit={handleAuth} className="space-y-6">
-                        {view === "signup" && (
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    {t("fullName")}
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    value={fullName}
-                                    onChange={(e) => setFullName(e.target.value)}
-                                />
-                            </div>
-                        )}
-
-                        {view !== "update" && (
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    {t("email")}
-                                </label>
-                                <input
-                                    type="email"
-                                    required
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                            </div>
-                        )}
-
-                        {view !== "forgot" && (
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    {view === "update" ? t("newPassword") : t("password")}
-                                </label>
-                                <input
-                                    type="password"
-                                    required
-                                    minLength={6}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                            </div>
-                        )}
-
-                        {view === "update" && (
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    {t("confirmPassword")}
-                                </label>
-                                <input
-                                    type="password"
-                                    required
-                                    minLength={6}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                />
-                            </div>
-                        )}
-
-                        {view === "login" && (
-                            <div className="flex justify-end">
-                                <button
-                                    type="button"
-                                    className="text-xs text-blue-600 hover:text-blue-500"
-                                    onClick={() => setView("forgot")}
-                                >
-                                    {t("forgotPassword")}
-                                </button>
-                            </div>
-                        )}
-
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-                        >
-                            {loading ? t("processing") : (
-                                view === "login" ? t("signIn") :
-                                    view === "signup" ? t("signUp") :
-                                        view === "forgot" ? t("resetBtn") :
-                                            t("updatePasswordBtn")
-                            )}
-                        </button>
-                    </form>
-
-                    <div className="mt-6 text-center space-y-2">
-                        {view === "forgot" ? (
-                            <button
-                                type="button"
-                                className="text-sm text-blue-600 hover:text-blue-500"
-                                onClick={() => setView("login")}
-                            >
-                                {t("backToLogin")}
-                            </button>
-                        ) : view !== "update" && (
-                            <button
-                                type="button"
-                                className="text-sm text-blue-600 hover:text-blue-500"
-                                onClick={() => setView(view === "login" ? "signup" : "login")}
-                            >
-                                {view === "login" ? t("noAccount") : t("hasAccount")}
-                            </button>
-                        )}
-                    </div>
-                </div>
-            </div>
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-gray-900">
+            Welcome to the Lesson Planner
+          </h1>
+          <p className="mt-2 text-sm text-gray-600">
+            Sign in to continue
+          </p>
         </div>
-    );
-}
+        <button
+          onClick={handleGoogleLogin}
+          type="button"
+          className="w-full flex items-center justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          <svg
+            className="w-5 h-5 mr-2 -ml-1"
+            aria-hidden="true"
+            focusable="false"
+            data-prefix="fab"
+            data-icon="google"
+            role="img"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 488 512"
+          >
+            <path
+              fill="currentColor"
+              d="M488 261.8C488 403.3 381.5 512 244 512 109.8 512 0 402.2 0 256S109.8 0 244 0c73.2 0 136 25.3 186.3 65.8l-67.4 64.9C331.7 101.3 291.4 80 244 80 149.3 80 72 155.1 72 256s77.3 176 172 176c56.8 0 96.2-22.1 123.3-47.8 20.3-19.1 33.6-43.2 37.9-71.1H244V261.8h244z"
+            ></path>
+          </svg>
+          Sign in with Google
+        </button>
+        <p className="text-xs text-center text-gray-500">
+          By signing in, you agree to our terms and conditions.
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default Auth;
