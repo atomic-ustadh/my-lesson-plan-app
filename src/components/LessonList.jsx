@@ -59,7 +59,6 @@ export default function LessonList({ userId, isAdmin, refreshKey, onAction }) {
       query = query.eq("subject", filterSubject);
     }
     if (filterWeek) {
-      console.log("Filtering by week:", filterWeek);
       // Use JSONB containment operator for nested field
       query = query.filter("content", "cs", JSON.stringify({ week: filterWeek }));
     }
@@ -69,10 +68,7 @@ export default function LessonList({ userId, isAdmin, refreshKey, onAction }) {
 
     const { data, error } = await query;
     if (error) console.error("Error fetching lessons:", error);
-    else {
-      console.log("Fetched lessons:", data);
-      setLessons(data || []);
-    }
+    else setLessons(data || []);
     setLoading(false);
   };
 
