@@ -1,7 +1,7 @@
 export const translations = {
     en: {
         // Auth
-        appTitle: "LessonPlanner",
+        appTitle: "Lesson Planner",
         loginTitle: "Welcome Back",
         signupTitle: "Create Account",
         fullName: "Full Name",
