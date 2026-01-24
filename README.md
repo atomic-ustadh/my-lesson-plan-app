@@ -1,4 +1,4 @@
-# 📝 Islamic Lesson Planner
+# 📝 Lesson Planner
 
 A comprehensive, bilingual (English/Arabic) lesson planning application designed specifically for Islamic schools and educators. Built with modern web technologies and featuring robust role-based access control.
 
@@ -27,11 +27,6 @@ A comprehensive, bilingual (English/Arabic) lesson planning application designed
   - Filter by teacher, subject, and week
   - Cannot duplicate lessons (supervisor oversight only)
 
-### 🔍 Advanced Filtering
-- **Subject Filter**: Filter by Quran, Islamic Studies, Arabic, English, Mathematics, Science, and more
-- **Week Filter**: Filter by academic weeks (Week 1-20)
-- **Teacher Filter** (Admin only): View lessons by specific teachers
-- **Combined Filters**: Use multiple filters simultaneously for precise results
 
 ### 📚 Comprehensive Lesson Planning
 Each lesson plan includes:
@@ -54,7 +49,7 @@ Each lesson plan includes:
 - **Vite** - Build tool and dev server
 - **React Router** - Client-side routing
 - **Tailwind CSS** - Utility-first styling
-- **i18next** - Internationalization
+- **Custom Language Context** - Internationalization with `LanguageContext` and `translations.js`
 
 ### Backend
 - **Supabase** - Backend as a Service
@@ -229,7 +224,7 @@ The app will be available at `http://localhost:5173`
 
 ### First Time Setup
 1. **Sign Up**: Create an account (defaults to 'teacher' role)
-2. **Admin Setup**: Manually update a user's role to 'admin' in Supabase:
+2. **Admin Setup**: Manually update a user's role to 'admin' in Supabase by editing the `role` column of the `profiles` table manually or using the SQL Editor in the Supabase Dashboard:
    ```sql
    UPDATE public.profiles 
    SET role = 'admin' 
