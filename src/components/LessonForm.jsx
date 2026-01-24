@@ -170,7 +170,7 @@ export default function LessonForm({ userId, onSave }) {
             >
               <option value="">{t("phSubject")}</option>
               {subjects.map((s) => (
-                <option key={s} value={s}>{s}</option>
+                <option key={s.value} value={s.value}>{s.label}</option>
               ))}
             </select>
           </div>
@@ -200,7 +200,7 @@ export default function LessonForm({ userId, onSave }) {
             >
               <option value="">Select Week</option>
               {weeks.map((w) => (
-                <option key={w} value={w}>{w}</option>
+                <option key={w.value} value={w.value}>{w.label}</option>
               ))}
             </select>
           </div>
@@ -243,7 +243,7 @@ export default function LessonForm({ userId, onSave }) {
             >
               <option value="">Select Grade</option>
               {classes.map((c) => (
-                <option key={c} value={c}>{c}</option>
+                <option key={c.value} value={c.value}>{c.label}</option>
               ))}
             </select>
           </div>

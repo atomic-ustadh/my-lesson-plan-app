@@ -107,7 +107,7 @@ export default function LessonList({ userId, isAdmin, refreshKey, onAction }) {
               className="text-sm border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 py-1 bg-white"
             >
               <option value="">{t("filterAllSubjects")}</option>
-              {subjects.map(s => <option key={s} value={s}>{s}</option>)}
+              {subjects.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
             </select>
 
             {/* Week Filter */}
@@ -117,7 +117,7 @@ export default function LessonList({ userId, isAdmin, refreshKey, onAction }) {
               className="text-sm border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 py-1 bg-white"
             >
               <option value="">{t("filterAllWeeks")}</option>
-              {weeks.map(w => <option key={w} value={w}>{w}</option>)}
+              {weeks.map(w => <option key={w.value} value={w.value}>{w.label}</option>)}
             </select>
 
             {/* Teacher Filter (Admin Only) */}
