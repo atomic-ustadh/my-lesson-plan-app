@@ -174,7 +174,7 @@ export default function LandingPage() {
                     <Link to="/privacy-policy" className="cursor-pointer hover:text-emerald-600 transition-colors uppercase tracking-wider">Privacy Policy</Link>
                     <Link to="/terms-of-use" className="cursor-pointer hover:text-emerald-600 transition-colors uppercase tracking-wider">Terms of Use</Link>
                 </div>
-                &copy; {new Date().getFullYear()} {t("appTitle")}. {t("allRights")}
+                &copy; {new Date().getFullYear()} {t("appTitle")}. by <a href="https://github.com/atomic-ustadh/" target="_blank" className="underline">Atomic Ustadh</a> {t("allRights")}
             </footer>
         </div>
     );
