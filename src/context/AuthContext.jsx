@@ -13,7 +13,6 @@ export function AuthProvider({ children }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('Current window.location.hash:', window.location.hash);
         // 1. Check active session
         supabase.auth.getSession().then(({ data: { session } }) => {
             setSession(session);
@@ -30,8 +29,6 @@ export function AuthProvider({ children }) {
         const {
             data: { subscription },
         } = supabase.auth.onAuthStateChange((event, session) => {
-            console.log('Auth event:', event);
-            console.log('Auth session:', session);
             setSession(session);
 
             if (event === 'PASSWORD_RECOVERY') {
@@ -51,7 +48,7 @@ export function AuthProvider({ children }) {
         });
 
         return () => subscription.unsubscribe();
-    }, []);
+    }, [navigate]);
 
     async function fetchProfile(userId, sessionUser) {
         try {
