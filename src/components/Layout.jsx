@@ -16,7 +16,7 @@ export default function Layout() {
                 alert("Failed to sign out. Please try again.");
             } else {
                 // Force navigation after successful sign out
-                window.location.href = "/login";
+                navigate("/");
             }
         } catch (err) {
             console.error("Sign out exception:", err);
