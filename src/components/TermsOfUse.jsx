@@ -10,7 +10,7 @@ export default function TermsOfUse() {
 
     return (
         <div className={`min-h-screen bg-gray-100 py-10 px-4 ${isRtl ? 'text-right' : 'text-left'}`}>
-            <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md">
+            <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md prose prose-lg">
                 <button
                     onClick={() => navigate('/')}
                     className="mb-6 text-blue-600 hover:text-blue-800 flex items-center"
