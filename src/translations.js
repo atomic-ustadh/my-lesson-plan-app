@@ -5,6 +5,8 @@ export const translations = {
         signInTitle: "Sign In",
         or: "or",
         signInWithGoogle: "Sign in with Google",
+        signUp: "Sign Up",
+        signIn: "Sign In",
 
         // Landing Page
         heroTitle: "Plan Your Lessons with Excellence",
@@ -176,6 +178,8 @@ export const translations = {
         signInTitle: "تسجيل الدخول",
         or: "أو",
         signInWithGoogle: "تسجيل الدخول باستخدام جوجل",
+        signUp: "تسجيل",
+        signIn: "تسجيل الدخول",
 
         // Landing Page
         heroTitle: "خطط لدروسك بامتياز",
