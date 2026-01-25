@@ -61,7 +61,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* Back to Home Link */}
-                <div className="text-center mt-20">
+                <div className="text-center mt-5">
                     <Link to="/" className="text-emerald-600 hover:text-emerald-800 font-medium">
                         &larr; {t("btnBackHome")}
                     </Link>
