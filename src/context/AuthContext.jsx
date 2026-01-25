@@ -29,8 +29,6 @@ export function AuthProvider({ children }) {
         const {
             data: { subscription },
         } = supabase.auth.onAuthStateChange((event, session) => {
-            console.log('Auth event:', event);
-            console.log('Auth session:', session);
             setSession(session);
 
             if (event === 'PASSWORD_RECOVERY') {
