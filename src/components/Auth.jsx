@@ -53,7 +53,7 @@ const Auth = () => {
               d="M488 261.8C488 403.3 381.5 512 244 512 109.8 512 0 402.2 0 256S109.8 0 244 0c73.2 0 136 25.3 186.3 65.8l-67.4 64.9C331.7 101.3 291.4 80 244 80 149.3 80 72 155.1 72 256s77.3 176 172 176c56.8 0 96.2-22.1 123.3-47.8 20.3-19.1 33.6-43.2 37.9-71.1H244V261.8h244z"
             ></path>
           </svg>
-          Sign in with Google
+          Sign in with Google Account
         </button>
         <p className="text-xs text-center text-gray-500">
           By signing in, you agree to our terms and conditions.
