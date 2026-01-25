@@ -9,6 +9,7 @@ const Auth = () => {
           // You can add a redirectTo option here if you want to redirect
           // users to a specific page after they sign in.
           // redirectTo: window.location.origin + '/dashboard',
+          redirectTo: window.location.origin + '/dashboard',
         },
       });
 
