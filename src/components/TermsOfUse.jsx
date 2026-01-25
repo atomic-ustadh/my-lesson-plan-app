@@ -19,7 +19,7 @@ export default function TermsOfUse() {
                     {t("btnBackHome")}
                 </button>
 
-                <h1 className="text-3xl font-bold text-gray-800 mb-6">{t("termsOfUseTitle")}</h1>
+                <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">{t("termsOfUseTitle")}</h1>
 
                 <section className="mb-8">
                     <h2 className="text-2xl font-semibold text-gray-700 mb-4">{t("termsSection1Title")}</h2>
