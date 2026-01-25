@@ -170,9 +170,24 @@ export default function LandingPage() {
             {/* Footer */}
             <footer className="w-full py-12 text-center text-emerald-600/60 text-sm border-t border-emerald-50 bg-white">
                 <div className="flex justify-center gap-6 mb-4 text-emerald-800/80 font-medium">
-                    <span className="cursor-pointer hover:text-emerald-600 transition-colors uppercase tracking-wider">About</span>
-                    <span className="cursor-pointer hover:text-emerald-600 transition-colors uppercase tracking-wider">Privacy</span>
-                    <span className="cursor-pointer hover:text-emerald-600 transition-colors uppercase tracking-wider">Contact</span>
+                    <button
+                        onClick={() => navigate("/about")}
+                        className="cursor-pointer hover:text-emerald-600 transition-colors uppercase tracking-wider"
+                    >
+                        {t("aboutLink")}
+                    </button>
+                    <button
+                        onClick={() => navigate("/privacy-policy")}
+                        className="cursor-pointer hover:text-emerald-600 transition-colors uppercase tracking-wider"
+                    >
+                        {t("privacyPolicyLink")}
+                    </button>
+                    <button
+                        onClick={() => navigate("/terms-of-use")}
+                        className="cursor-pointer hover:text-emerald-600 transition-colors uppercase tracking-wider"
+                    >
+                        {t("termsOfUseLink")}
+                    </button>
                 </div>
                 &copy; {new Date().getFullYear()} {t("appTitle")}. {t("allRights")}
             </footer>

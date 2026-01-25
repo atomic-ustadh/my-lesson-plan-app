@@ -6,6 +6,9 @@ import LessonList from "./components/LessonList";
 import LessonForm from "./components/LessonForm";
 import LandingPage from "./components/LandingPage";
 import ErrorPage from "./components/ErrorPage";
+import AboutPage from "./components/AboutPage"; // Import AboutPage
+import PrivacyPolicy from "./components/PrivacyPolicy"; // Import PrivacyPolicy
+import TermsOfUse from "./components/TermsOfUse"; // Import TermsOfUse
 
 function ProtectedRoute({ children }) {
   const { session, loading } = useAuth();
@@ -23,6 +26,11 @@ function AppContent() {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={(!session || recoveryMode) ? <Auth /> : <Navigate to="/dashboard" replace />} />
+
+      {/* Public pages */}
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/terms-of-use" element={<TermsOfUse />} />
 
       <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
         <Route path="/dashboard" element={<LessonList userId={session?.user?.id} isAdmin={userRole === 'admin'} />} />
