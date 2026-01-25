@@ -1,5 +1,5 @@
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { auth } from "../supabaseClient";
+import { supabase } from "../supabaseClient";
 import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -8,11 +8,16 @@ export default function Layout() {
     const { t, toggleLanguage, language } = useLanguage();
     const navigate = useNavigate();
 
-const handleLogout = async () => {
+    const handleLogout = async () => {
         try {
-            await auth.signOut();
-            // Force navigation after successful sign out
-            window.location.href = "/login";
+            const { error } = await supabase.auth.signOut();
+            if (error) {
+                console.error("Sign out error:", error);
+                alert("Failed to sign out. Please try again.");
+            } else {
+                // Force navigation after successful sign out
+                window.location.href = "/login";
+            }
         } catch (err) {
             console.error("Sign out exception:", err);
             alert("An error occurred during sign out.");

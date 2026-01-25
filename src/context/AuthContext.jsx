@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { supabase, auth } from "../supabaseClient";
+import { supabase } from "../supabaseClient";
 
 const AuthContext = createContext();
 
@@ -8,21 +8,30 @@ export function AuthProvider({ children }) {
     const [userRole, setUserRole] = useState(null);
     const [userName, setUserName] = useState("");
     const [loading, setLoading] = useState(true);
-    
+    const [recoveryMode, setRecoveryMode] = useState(false);
 
-useEffect(() => {
+    useEffect(() => {
         // 1. Check active session
-        auth.getSession().then(({ data: { session } }) => {
+        supabase.auth.getSession().then(({ data: { session } }) => {
             setSession(session);
             if (session) fetchProfile(session.user.id, session.user);
             else setLoading(false);
         });
 
+        // Manual hash check as fallback for event detection
+        if (window.location.hash && window.location.hash.includes("type=recovery")) {
+            setRecoveryMode(true);
+        }
+
         // 2. Listen for auth changes
         const {
             data: { subscription },
-        } = auth.onAuthStateChange((event, session) => {
+        } = supabase.auth.onAuthStateChange((event, session) => {
             setSession(session);
+
+            if (event === 'PASSWORD_RECOVERY') {
+                setRecoveryMode(true);
+            }
 
             if (session) {
                 fetchProfile(session.user.id, session.user);
@@ -37,7 +46,7 @@ useEffect(() => {
         return () => subscription.unsubscribe();
     }, []);
 
-async function fetchProfile(userId, sessionUser) {
+    async function fetchProfile(userId, sessionUser) {
         try {
             const { data, error } = await supabase
                 .from("profiles")
@@ -46,53 +55,36 @@ async function fetchProfile(userId, sessionUser) {
                 .single();
 
             if (error) {
-                // For Google Auth, create profile if it doesn't exist
-                if (error.code === 'PGRST116') {
-                    await createProfile(userId, sessionUser);
-                    // Try fetching again
-                    return fetchProfile(userId, sessionUser);
-                }
-                // Fallback: Use Google user data if DB fetch fails
+                // Fallback: Use metadata from the session user object if DB fetch fails
                 console.warn("Profile fetch warning:", error.message);
-                const googleName = sessionUser?.user_metadata?.full_name || sessionUser?.user_metadata?.name;
+                const metaName = sessionUser?.user_metadata?.full_name;
 
-                setUserRole("teacher");
-                setUserName(googleName || "Teacher");
+                setUserRole("teacher"); // Default incase of error
+                setUserName(metaName || "Teacher");
             } else {
                 const dbName = data?.full_name;
-                const googleName = sessionUser?.user_metadata?.full_name || sessionUser?.user_metadata?.name;
+                const metaName = sessionUser?.user_metadata?.full_name;
 
                 setUserRole(data?.role || "teacher");
-                // Prefer DB name, fallback to Google name, then default
-                setUserName(dbName || googleName || "Teacher");
+                // Prefer DB name, fallback to Auth metadata, then default string
+                setUserName(dbName || metaName || "Teacher");
             }
         } catch (err) {
             console.error("Profile fetch error:", err);
             // Final fallback in crash
-            const googleName = sessionUser?.user_metadata?.full_name || sessionUser?.user_metadata?.name;
-            setUserName(googleName || "Teacher");
+            setUserName(sessionUser?.user_metadata?.full_name || "Teacher");
         } finally {
             setLoading(false);
         }
     }
 
-    async function createProfile(userId, sessionUser) {
-        const googleName = sessionUser?.user_metadata?.full_name || sessionUser?.user_metadata?.name || "Teacher";
-        const googleEmail = sessionUser?.email || "";
-
-        await supabase.from("profiles").insert({
-            id: userId,
-            email: googleEmail,
-            full_name: googleName,
-            role: "teacher"
-        });
-    }
-
-const value = {
+    const value = {
         session,
         userRole,
         userName,
         loading,
+        recoveryMode,
+        setRecoveryMode,
         isAdmin: userRole === "admin",
     };
 
