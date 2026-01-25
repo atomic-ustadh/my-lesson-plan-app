@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import { useAuth } from "../context/AuthContext";
 
@@ -170,9 +170,9 @@ export default function LandingPage() {
             {/* Footer */}
             <footer className="w-full py-12 text-center text-emerald-600/60 text-sm border-t border-emerald-50 bg-white">
                 <div className="flex justify-center gap-6 mb-4 text-emerald-800/80 font-medium">
-                    <span className="cursor-pointer hover:text-emerald-600 transition-colors uppercase tracking-wider">About</span>
-                    <span className="cursor-pointer hover:text-emerald-600 transition-colors uppercase tracking-wider">Privacy</span>
-                    <span className="cursor-pointer hover:text-emerald-600 transition-colors uppercase tracking-wider">Contact</span>
+                    <Link to="/about" className="cursor-pointer hover:text-emerald-600 transition-colors uppercase tracking-wider">About</Link>
+                    <Link to="/privacy-policy" className="cursor-pointer hover:text-emerald-600 transition-colors uppercase tracking-wider">Privacy Policy</Link>
+                    <Link to="/terms-of-use" className="cursor-pointer hover:text-emerald-600 transition-colors uppercase tracking-wider">Terms of Use</Link>
                 </div>
                 &copy; {new Date().getFullYear()} {t("appTitle")}. {t("allRights")}
             </footer>

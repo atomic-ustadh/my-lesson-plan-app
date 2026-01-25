@@ -6,11 +6,11 @@ import LessonList from "./components/LessonList";
 import LessonForm from "./components/LessonForm";
 import LandingPage from "./components/LandingPage";
 import ErrorPage from "./components/ErrorPage";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import TermsOfUse from "./components/TermsOfUse";
 
 function ProtectedRoute({ children }) {
   const { session, loading } = useAuth();
-
-  if (loading) return <div className="p-10 text-center">Loading...</div>;
   if (!session) return <Navigate to="/login" replace />;
 
   return children;
@@ -23,6 +23,8 @@ function AppContent() {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={(!session || recoveryMode) ? <Auth /> : <Navigate to="/dashboard" replace />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/terms-of-use" element={<TermsOfUse />} />
 
       <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
         <Route path="/dashboard" element={<LessonList userId={session?.user?.id} isAdmin={userRole === 'admin'} />} />
