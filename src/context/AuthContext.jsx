@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 
 const AuthContext = createContext();
@@ -10,7 +9,6 @@ export function AuthProvider({ children }) {
     const [userName, setUserName] = useState("");
     const [loading, setLoading] = useState(true);
     const [recoveryMode, setRecoveryMode] = useState(false);
-    const navigate = useNavigate();
 
     useEffect(() => {
         // 1. Check active session
@@ -33,8 +31,6 @@ export function AuthProvider({ children }) {
 
             if (event === 'PASSWORD_RECOVERY') {
                 setRecoveryMode(true);
-            } else if (event === 'SIGNED_OUT') {
-                navigate('/');
             }
 
             if (session) {
@@ -48,7 +44,7 @@ export function AuthProvider({ children }) {
         });
 
         return () => subscription.unsubscribe();
-    }, [navigate]);
+    }, []);
 
     async function fetchProfile(userId, sessionUser) {
         try {
@@ -98,4 +94,3 @@ export function AuthProvider({ children }) {
 export function useAuth() {
     return useContext(AuthContext);
 }
-

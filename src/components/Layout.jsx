@@ -9,10 +9,18 @@ export default function Layout() {
     const navigate = useNavigate();
 
     const handleLogout = async () => {
-        const { error } = await supabase.auth.signOut();
-        if (error) {
-            console.error("Sign out error:", error);
-            alert("Failed to sign out. Please try again.");
+        try {
+            const { error } = await supabase.auth.signOut();
+            if (error) {
+                console.error("Sign out error:", error);
+                alert("Failed to sign out. Please try again.");
+            } else {
+                // Force navigation after successful sign out
+                navigate("/");
+            }
+        } catch (err) {
+            console.error("Sign out exception:", err);
+            alert("An error occurred during sign out.");
         }
     };
 
