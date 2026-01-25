@@ -4,34 +4,27 @@ import { translations } from "../translations";
 const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
-    // Read from localStorage or default to english
-    const [language, setLanguage] = useState(() => {
-        return localStorage.getItem("app_language") || "ar";
-    });
+    // Default to English, as Arabic support is removed
+    const [language, setLanguage] = useState("en");
 
-    const direction = language === "ar" ? "rtl" : "ltr";
+    const direction = "ltr";
 
     // When language changes, update localStorage and the HTML dir attribute
     useEffect(() => {
         localStorage.setItem("app_language", language);
         document.documentElement.dir = direction;
         document.documentElement.lang = language;
-        document.body.className = direction === "rtl" ? "font-rtl" : "font-ltr";
+        document.body.className = "font-ltr";
     }, [language, direction]);
-
-    const toggleLanguage = () => {
-        setLanguage((prev) => (prev === "en" ? "ar" : "en"));
-    };
 
     // Helper to get translation
     const t = (key) => {
-        return translations[language][key] || key;
+        return translations.en[key] || key;
     };
 
     const value = {
         language,
         direction,
-        toggleLanguage,
         t,
     };
 

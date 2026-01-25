@@ -3,20 +3,18 @@ import { useLanguage } from '../context/LanguageContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function TermsOfUse() {
-    const { t, language } = useLanguage();
+    const { t } = useLanguage();
     const navigate = useNavigate();
 
-    const isRtl = language === 'ar';
-
     return (
-        <div className={`min-h-screen bg-gray-100 py-10 px-4 ${isRtl ? 'text-right' : 'text-left'}`}>
+        <div className="min-h-screen bg-gray-100 py-10 px-4 text-left">
             <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md prose prose-lg">
                 <button
                     onClick={() => navigate('/')}
                     className="mb-6 text-blue-600 hover:text-blue-800 flex items-center"
                 >
-                    <svg className={`w-4 h-4 ${isRtl ? 'ml-2' : 'mr-2'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isRtl ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"}></path>
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
                     </svg>
                     {t("btnBackHome")}
                 </button>
@@ -39,9 +37,39 @@ export default function TermsOfUse() {
                     </ul>
                 </section>
 
-                <section>
+                <section className="mb-8">
                     <h2 className="text-2xl font-semibold text-gray-700 mb-4">{t("termsSection3Title")}</h2>
                     <p className="text-gray-600 leading-relaxed">{t("termsSection3ContentP1")}</p>
+                </section>
+
+                <section className="mb-8">
+                    <h2 className="text-2xl font-semibold text-gray-700 mb-4">{t("termsSection4Title")}</h2>
+                    <p className="text-gray-600 leading-relaxed">{t("termsSection4Content")}</p>
+                </section>
+
+                <section className="mb-8">
+                    <h2 className="text-2xl font-semibold text-gray-700 mb-4">{t("termsSection5Title")}</h2>
+                    <p className="text-gray-600 leading-relaxed">{t("termsSection5Content")}</p>
+                </section>
+
+                <section className="mb-8">
+                    <h2 className="text-2xl font-semibold text-gray-700 mb-4">{t("termsSection6Title")}</h2>
+                    <p className="text-gray-600 leading-relaxed">{t("termsSection6Content")}</p>
+                </section>
+
+                <section className="mb-8">
+                    <h2 className="text-2xl font-semibold text-gray-700 mb-4">{t("termsSection7Title")}</h2>
+                    <p className="text-gray-600 leading-relaxed">{t("termsSection7Content")}</p>
+                </section>
+
+                <section className="mb-8">
+                    <h2 className="text-2xl font-semibold text-gray-700 mb-4">{t("termsSection8Title")}</h2>
+                    <p className="text-gray-600 leading-relaxed">{t("termsSection8Content")}</p>
+                </section>
+
+                <section>
+                    <h2 className="text-2xl font-semibold text-gray-700 mb-4">{t("termsSection9Title")}</h2>
+                    <p className="text-gray-600 leading-relaxed">{t("termsSection9Content")}</p>
                 </section>
             </div>
         </div>

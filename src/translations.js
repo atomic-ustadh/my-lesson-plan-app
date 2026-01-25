@@ -2,6 +2,7 @@ export const translations = {
     en: {
         // Auth
         appTitle: "Lesson Planner",
+        signInTitle: "Sign In",
         or: "or",
         signInWithGoogle: "Sign in with Google",
 
@@ -14,6 +15,31 @@ export const translations = {
         aboutLink: "About",
         privacyPolicyLink: "Privacy Policy",
         termsOfUseLink: "Terms of Use",
+
+        // Terms Of Use Page
+        termsOfUseTitle: "Terms of Use",
+        termsSection1Title: "1. Acceptance of Terms",
+        termsSection1ContentP1: "By accessing or using the Lesson Planner ('we', 'us', 'our') service, you agree to be bound by these Terms of Use and all terms incorporated by reference. If you do not agree to all of these terms, do not use our service.",
+        termsSection1ContentP2: "These Terms of Use apply to all visitors, users, and others who access or use the Service.",
+        termsSection2Title: "2. Your Account",
+        termsSection2ContentP1: "When you create an account with us, you must provide us with information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account on our Service.",
+        termsSection2ListItem1: "You are responsible for safeguarding the password that you use to access the Service and for any activities or actions under your password.",
+        termsSection2ListItem2: "You agree not to disclose your password to any third party.",
+        termsSection2ListItem3: "You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account.",
+        termsSection3Title: "3. Content",
+        termsSection3ContentP1: "Our Service allows you to post, link, store, share and otherwise make available certain information, text, graphics, videos, or other material ('Content'). You are responsible for the Content that you post to the Service, including its legality, reliability, and appropriateness.",
+        termsSection4Title: "4. Intellectual Property",
+        termsSection4Content: "The Service and its original content (excluding Content provided by users), features and functionality are and will remain the exclusive property of Lesson Planner and its licensors. The Service is protected by copyright, trademark, and other laws of both the U.S. and foreign countries.",
+        termsSection5Title: "5. Links To Other Web Sites",
+        termsSection5Content: "Our Service may contain links to third-party web sites or services that are not owned or controlled by Lesson Planner. Lesson Planner has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. We do not warrant the offerings of any of these entities/individuals or their websites.",
+        termsSection6Title: "6. Termination",
+        termsSection6Content: "We may terminate or suspend your account immediately, without prior notice or liability, under our sole discretion, for any reason whatsoever and without limitation, including but not limited to a breach of the Terms. Upon termination, your right to use the Service will immediately cease.",
+        termsSection7Title: "7. Governing Law",
+        termsSection7Content: "These Terms shall be governed and construed in accordance with the laws of the U.S., without regard to its conflict of law provisions.",
+        termsSection8Title: "8. Changes",
+        termsSection8Content: "We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will provide at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.",
+        termsSection9Title: "9. Contact Us",
+        termsSection9Content: "If you have any questions about these Terms, please contact us at support@lessonplanner.com.",
 
         // About Page
         aboutTitle: "About Our Mission",
@@ -143,164 +169,5 @@ export const translations = {
         filterAllWeeks: "All Weeks",
         filterTitle: "Filters",
         filterClear: "Clear Filters",
-    },
-    ar: {
-        // Auth
-        appTitle: "مخطط الدروس",
-        or: "أو",
-        signInWithGoogle: "تسجيل الدخول باستخدام جوجل",
-
-        // Layout
-        signOut: "خروج",
-        languageName: "العربية",
-
-        // Lesson List
-        allLessons: "جميع خطط الدروس",
-        myLessons: "دروسي",
-        newLesson: "+ درس جديد",
-        noLessons: "لا توجد خطط دروس.",
-        colWeek: "الأسبوع",
-        colTopic: "الموضوع",
-        colSubject: "المادة",
-        colTeacher: "المعلم",
-        colActions: "إجراءات",
-        btnView: "عرض",
-        btnEdit: "تعديل",
-        btnCopy: "نسخ",
-        btnDelete: "حذف",
-        confirmDelete: "هل أنت متأكد أنك تريد حذف هذا الدرس؟",
-
-        // Lesson Form
-        editLesson: "تعديل خطة الدرس",
-        createLesson: "خطة درس جديدة",
-        viewLesson: "عرض خطة الدرس",
-        saveBtn: "حفظ الخطة",
-        updateBtn: "تحديث الخطة",
-        cancelBtn: "إلغاء",
-        closeBtn: "إغلاق",
-
-        // Form Labels
-        lblSubject: "المادة",
-        lblTopic: "الموضوع",
-        lblDate: "التاريخ",
-        lblDuration: "الزمن",
-        lblGrade: "الصف",
-        lblPeriod: "الحصة",
-        lblAge: "مستوى أعمار المتعلمين",
-        lblWeek: "الأسبوع",
-        lblIntro: "التمهيد",
-        lblObjectives: "الأهداف السلوكية",
-        lblSummary: "ملخص محتوى الدرس",
-        lblMethod: "طريقة التدريس و مهارات الدرس",
-        lblResources: "الموارد و الوسائل التعليمية",
-        lblEval: "الأنشطة \ التقويم",
-        lblAssign: "الواجبات",
-        lblTComment: "تعليق المعلم",
-        lblSComment: "تعليق المشرف",
-
-        // Placeholders
-        phSubject: "اختر المادة",
-        phTopic: "أدخل موضوع الدرس",
-        phIntro: "مقدمة موجزة...",
-        phObj: "اذكر أهدافك هنا...",
-
-        // Landing Page
-        heroTitle: "خطط لدروسك بإتقان",
-        heroSubtitle: "منصة شاملة للمعلمين لإعداد وتتبع وتنظيم الخطط الدرسية بسهولة واحترافية.",
-        startFree: "ابدأ الآن مجاناً",
-        dashboard: "اذهب إلى لوحة التحكم",
-        allRights: "جميع الحقوق محفوظة.",
-        aboutLink: "عنا",
-        privacyPolicyLink: "سياسة الخصوصية",
-        termsOfUseLink: "شروط الاستخدام",
-
-        // Terms Of Use Page
-        termsOfUseTitle: "شروط الاستخدام",
-        termsSection1Title: "1. قبول الشروط",
-        termsSection1ContentP1: "من خلال الوصول إلى مخطط الدروس أو استخدامه، فإنك توافق على الالتزام بشروط الاستخدام هذه وجميع الشروط المدمجة بالرجوع إليها. إذا كنت لا توافق على جميع هذه الشروط، فلا تستخدم خدمتنا.",
-        termsSection1ContentP2: "تنطبق شروط الاستخدام هذه على جميع الزوار والمستخدمين وغيرهم ممن يصلون إلى الخدمة أو يستخدمونها.",
-        termsSection2Title: "2. حسابك",
-        termsSection2ContentP1: "عند إنشاء حساب لدينا، يجب عليك تزويدنا بمعلومات دقيقة وكاملة وحديثة في جميع الأوقات. يشكل عدم القيام بذلك خرقًا للشروط، مما قد يؤدي إلى الإنهاء الفوري لحسابك على خدمتنا.",
-        termsSection2ListItem1: "أنت مسؤول عن حماية كلمة المرور التي تستخدمها للوصول إلى الخدمة وعن أي أنشطة أو إجراءات تتم تحت كلمة مرورك.",
-        termsSection2ListItem2: "أنت توافق على عدم الكشف عن كلمة مرورك لأي طرف ثالث.",
-        termsSection2ListItem3: "يجب عليك إبلاغنا فورًا عند علمك بأي خرق أمني أو استخدام غير مصرح به لحسابك.",
-        termsSection3Title: "3. المحتوى",
-        termsSection3ContentP1: "تتيح لك خدمتنا نشر وربط وتخزين ومشاركة وإتاحة معلومات أو نصوص أو رسومات أو مقاطع فيديو أو مواد أخرى معينة ('المحتوى'). أنت مسؤول عن المحتوى الذي تنشره في الخدمة، بما في ذلك قانونيته وموثوقيته وملاءمته.",
-
-        // About Page
-        aboutTitle: "عن مهمتنا",
-        aboutSubtitle: "تمكين المعلمين بالأدوات التي تفهم احتياجاتهم.",
-        aboutMissionTitle: "مهمتنا",
-        aboutMissionContent: "في البيئة التعليمية سريعة الوتيرة اليوم، يحتاج المعلمون إلى أدوات ليست قوية فحسب، بل بديهية ومرنة وواعية ثقافيًا. مهمتنا هي تمكين المعلمين، لا سيما في المدارس الإسلامية، بتطبيق حديث لتخطيط الدروس يحترم ويدمج الاحتياجات ثنائية اللغة الفريدة للمناهج الإنجليزية والعربية. نهدف إلى تبسيط عملية التخطيط، مما يمنح المعلمين مزيدًا من الوقت للتركيز على ما يجيدونه: إلهام الطلاب وتثقيفهم.",
-        aboutStoryTitle: "القصة وراء التطبيق",
-        aboutStoryContent: "ولد هذا التطبيق من ملاحظة بسيطة: نقص الأدوات التعليمية عالية الجودة وثنائية اللغة المصممة مع الأخذ في الاعتبار سير العمل المحدد للمدارس الإسلامية. ورؤية هذه الفجوة، تحفزنا لإنشاء حل كان أكثر من مجرد محرر نصوص - منصة شاملة تتعامل مع دعم اللغة من اليمين إلى اليسار بسلاسة وتفهم بنية خطة الدرس المحددة جيدًا.",
-        aboutOpenSourceTitle: "مصدر مفتوح ومساهمة",
-        aboutOpenSourceContentP1: "نحن نؤمن بقوة المجتمع والتعاون. هذا المشروع مفتوح المصدر، ونرحب بالمساهمات من المطورين والمعلمين والمصممين الذين يشاركوننا رؤيتنا. سواء كنت تصلح خطأً، أو تقترح ميزة جديدة، أو تحسن الترجمات، فإن مدخلاتك قيمة.",
-        aboutOpenSourceContentP2: "يمكنك العثور على دليل التثبيت والاستخدام الكامل في مستودع GitHub الخاص بنا. قم بتفرع المشروع، وأرسل طلبات السحب، وساعدنا في بناء المستقبل من الأدوات التعليمية معًا.",
-        aboutGithubButton: "المساهمة على GitHub",
-
-        // Privacy Policy Page
-        privacyPolicyTitle: "سياسة الخصوصية",
-        privacySection1Title: "1. مقدمة",
-        privacySection1Content: "مرحبًا بكم في مخطط الدروس ('نحن'، 'نا'، 'خاصتنا'). نحن ملتزمون بحماية خصوصيتك. توضح سياسة الخصوصية هذه كيفية جمعنا لمعلوماتك واستخدامها والإفصاح عنها وحمايتها عند استخدامك لتطبيقنا.",
-        privacySection2Title: "2. المعلومات التي نجمعها",
-        privacySection2Content: "قد نجمع معلومات عنك بطرق مختلفة. قد تتضمن المعلومات التي نجمعها ما يلي:",
-        privacySection2ListItem1Strong: "البيانات الشخصية:",
-        privacySection2ListItem1: "معلومات التعريف الشخصية، مثل اسمك وعنوان بريدك الإلكتروني، التي تقدمها لنا طواعية عند التسجيل في التطبيق.",
-        privacySection2ListItem2Strong: "البيانات من الشبكات الاجتماعية:",
-        privacySection2ListItem2: "إذا قمت بالتسجيل أو تسجيل الدخول باستخدام حسابك على وسائل التواصل الاجتماعي (مثل Google)، فقد نجمع اسمك وعنوان بريدك الإلكتروني من تلك الخدمة.",
-        privacySection2ListItem3Strong: "المحتوى الذي ينشئه المستخدم:",
-        privacySection2ListItem3: "أي محتوى تنشئه، مثل خطط الدروس والتعليقات والبيانات الأخرى التي تدخلها في التطبيق.",
-        privacySection3Title: "3. استخدام معلوماتك",
-        privacySection3Content: "يسمح لنا امتلاك معلومات دقيقة بتزويدك بتجربة سلسة وفعالة ومخصصة. على وجه التحديد، قد نستخدم المعلومات التي تم جمعها عنك من أجل:",
-        privacySection3ListItem1: "إنشاء حسابك وإدارته.",
-        privacySection3ListItem2: "توفير تطبيقنا وتشغيله وصيانته.",
-        privacySection3ListItem3: "تحسين تطبيقنا وتخصيصه وتوسعته.",
-        privacySection3ListItem4: "التواصل معك، إما مباشرة أو من خلال أحد شركائنا، لخدمة العملاء، لتزويدك بالتحديثات والمعلومات الأخرى المتعلقة بالتطبيق.",
-        privacySection4Title: "4. الكشف عن معلوماتك",
-        privacySection4Content: "لا نشارك معلوماتك الشخصية مع أطراف ثالثة دون موافقتك، إلا في الحالات التالية:",
-        privacySection4ListItem1Strong: "بموجب القانون أو لحماية الحقوق:",
-        privacySection4ListItem1: "إذا كنا نعتقد أن الكشف عن معلومات عنك ضروري للاستجابة لإجراء قانوني، أو للتحقيق في انتهاكات محتملة لسياساتنا أو علاجها، أو لحماية حقوق الآخرين وممتلكاتهم وسلامتهم.",
-        privacySection4ListItem2Strong: "مقدمو خدمات الطرف الثالث:",
-        privacySection4ListItem2: "قد نشارك معلوماتك مع أطراف ثالثة تؤدي خدمات لنا أو نيابة عنا، بما في ذلك تحليل البيانات وخدمات الاستضافة (مثل Supabase) وخدمة العملاء.",
-        privacySection5Title: "5. أمان معلوماتك",
-        privacySection5Content: "نحن نستخدم إجراءات أمنية إدارية وتقنية ومادية للمساعدة في حماية معلوماتك الشخصية. بينما اتخذنا خطوات معقولة لتأمين المعلومات الشخصية التي تقدمها لنا، يرجى العلم أنه على الرغم من جهودنا، لا توجد إجراءات أمنية مثالية أو غير قابلة للاختراق.",
-        privacySection6Title: "6. حقوق بياناتك",
-        privacySection6Content: "لديك الحق في طلب الوصول إلى البيانات الشخصية التي نحتفظ بها عنك، وتصحيح أي أخطاء، وطلب حذف بياناتك الشخصية. يمكنك إنهاء حسابك في أي وقت، وفي هذه الحالة سنقوم بحذف معلوماتك الشخصية.",
-        privacySection7Title: "7. اتصل بنا",
-        privacySection7Content: "إذا كان لديك أسئلة أو تعليقات حول سياسة الخصوصية هذه، يرجى الاتصال بنا على",
-
-
-        // Landing Page Features
-        featuresTitle: "لماذا تختار مخطط الدروس؟",
-        feature1Title: "تخطيط ذكي",
-        feature1Desc: "قوالب ومطالبات إرشادية لمساعدتك في هيكلة دروسك بفعالية.",
-        feature2Title: "دعم ثنائي اللغة",
-        feature2Desc: "تبديل سلس بين العربية والإنجليزية مع دعم كامل لتخطيط RTL.",
-        feature3Title: "توفير الوقت",
-        feature3Desc: "نسخ الدروس السابقة بنقرة واحدة وتعديل ما تحتاجه فقط.",
-        feature4Title: "جاهز للطباعة",
-        feature4Desc: "تنسيقات طباعة احترافية وسهلة القراءة ومصممة بخبرة.",
-
-        // Landing Page Testimonials
-        testimonialsTitle: "ماذا يقول المعلمون",
-        quote1: "لقد أحدثت هذه الأداة تحولاً كاملاً في تحضير دروسي. إنها سهلة الاستخدام للغاية!",
-        author1: "سارة الفارس، معلمة الصف الرابع",
-        quote2: "دعم RTL هو الأفضل الذي رأيته. دروسي باللغة العربية تبدو مثالية.",
-        author2: "أحمد حسن، أخصائي لغة عربية",
-
-        // Error Pages
-        err404Title: "عذراً! الصفحة غير موجودة",
-        err404Desc: "ربما تم نقل الصفحة التي تبحث عنها، أو حذفها، أو أنها لم تكن موجودة أبداً.",
-        err500Title: "خطأ في الخادم",
-        err500Desc: "حدث خطأ ما من جانبنا. يرجى المحاولة مرة أخرى لاحقاً.",
-        btnBackHome: "العودة للرئيسية",
-
-        // Filters
-        filterAllTeachers: "جميع المعلمين",
-        filterAllSubjects: "جميع المواد",
-        filterAllWeeks: "جميع الأسابيع",
-        filterTitle: "تصفية",
-        filterClear: "مسح التصفية",
     }
 };
