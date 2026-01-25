@@ -50,7 +50,7 @@ export function AuthProvider({ children }) {
         });
 
         return () => subscription.unsubscribe();
-    }, []);
+    }, [navigate]);
 
     async function fetchProfile(userId, sessionUser) {
         try {
