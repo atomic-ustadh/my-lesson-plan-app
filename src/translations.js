@@ -37,7 +37,7 @@ export const translations = {
         termsSection6Title: "6. Termination",
         termsSection6Content: "We may terminate or suspend your account immediately, without prior notice or liability, under our sole discretion, for any reason whatsoever and without limitation, including but not limited to a breach of the Terms. Upon termination, your right to use the Service will immediately cease.",
         termsSection7Title: "7. Governing Law",
-        termsSection7Content: "These Terms shall be governed and construed in accordance with the laws of the U.S., without regard to its conflict of law provisions.",
+        termsSection7Content: "These Terms shall be governed and construed in accordance with the laws of the Federal Repblic of Nigeria, without regard to its conflict of law provisions.",
         termsSection8Title: "8. Changes",
         termsSection8Content: "We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will provide at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.",
         termsSection9Title: "9. Contact Us",
