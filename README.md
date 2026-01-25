@@ -1,6 +1,6 @@
 # 📝 Lesson Planner
 
-A comprehensive, bilingual (English/Arabic) lesson planning application designed specifically for Islamic schools and educators. Built with modern web technologies and featuring robust role-based access control.
+A comprehensive, bilingual (English/Arabic) lesson planning application designed specifically for Islamic schools and educators. Built with modern web technologies and featuring robust role-based access control. [Visit Website](https://mysupabaselessonplan.netlify.app/)
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![React](https://img.shields.io/badge/React-18.x-61dafb.svg)
