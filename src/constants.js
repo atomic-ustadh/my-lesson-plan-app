@@ -7,15 +7,17 @@
 export const getSubjects = (language = 'en') => {
     const subjects = [
         { value: "Quran", label_en: "Quran", label_ar: "القرآن الكريم" },
-        { value: "Islamic Studies", label_en: "Islamic Studies", label_ar: "الدراسات الإسلامية" },
+        { value: "Fiqh", label_en: "Fiqh", label_ar: "الفقه" },
+        { value: "Tawheed", label_en: "Tawheed", label_ar: "التوحيد" },
+        { value: "Hadith", label_en: "Hadith", label_ar: "الحديث" },
         { value: "Arabic", label_en: "Arabic", label_ar: "اللغة العربية" },
-        { value: "English", label_en: "English", label_ar: "اللغة الإنجليزية" },
-        { value: "Mathematics", label_en: "Mathematics", label_ar: "الرياضيات" },
-        { value: "Science", label_en: "Science", label_ar: "العلوم" },
-        { value: "Social Studies", label_en: "Social Studies", label_ar: "الدراسات الاجتماعية" },
-        { value: "Computer Science", label_en: "Computer Science", label_ar: "علوم الحاسوب" },
-        { value: "Art", label_en: "Art", label_ar: "الفنون" },
-        { value: "PE", label_en: "PE", label_ar: "التربية البدنية" },
+        { value: "Seerah", label_en: "Seerah", label_ar: "السيرة " },
+        { value: "Huroof", label_en: "Huroof", label_ar: "الحروف" },
+        { value: "Arqaam", label_en: "Arqaam", label_ar: "الأرقام" },
+        { value: "Adhkar", label_en: "Adhkar", label_ar: "الأذكار" },
+        { value: "`Ulumul-Quran", label_en: "`Ulumul-Quran", label_ar: "علوم القرآن" },
+        { value: "`Ulumul-Hadith", label_en: "`Ulumul-Hadith", label_ar: "علوم الحديث" },
+        { value: "Adaab", label_en: "Adaab", label_ar: "الآداب" },
     ];
 
     return subjects.map(s => ({
@@ -26,18 +28,19 @@ export const getSubjects = (language = 'en') => {
 
 export const getGrades = (language = 'en') => {
     const grades = [
-        { value: "Grade 1", label_en: "Grade 1", label_ar: "الصف الأول" },
-        { value: "Grade 2", label_en: "Grade 2", label_ar: "الصف الثاني" },
-        { value: "Grade 3", label_en: "Grade 3", label_ar: "الصف الثالث" },
-        { value: "Grade 4", label_en: "Grade 4", label_ar: "الصف الرابع" },
-        { value: "Grade 5", label_en: "Grade 5", label_ar: "الصف الخامس" },
-        { value: "Grade 6", label_en: "Grade 6", label_ar: "الصف السادس" },
-        { value: "Grade 7", label_en: "Grade 7", label_ar: "الصف السابع" },
-        { value: "Grade 8", label_en: "Grade 8", label_ar: "الصف الثامن" },
-        { value: "Grade 9", label_en: "Grade 9", label_ar: "الصف التاسع" },
-        { value: "Grade 10", label_en: "Grade 10", label_ar: "الصف العاشر" },
-        { value: "Grade 11", label_en: "Grade 11", label_ar: "الصف الحادي عشر" },
-        { value: "Grade 12", label_en: "Grade 12", label_ar: "الصف الثاني عشر" }
+        { value: "Hadanah", label_en: "Hadanah", label_ar: "الحضانة" },
+        { value: "Raudah 1", label_en: "Raudah 1", label_ar: "الروضة الأولى" },
+        { value: "Raudah 2", label_en: "Raudah 2", label_ar: "الروضة الثانية" },
+        { value: "Raudah 3", label_en: "Raudah 3", label_ar: "الروضة الثالثة" },
+        { value: "Primary 1", label_en: "Primary 1", label_ar: "الأول الابتدائي" },
+        { value: "Primary 2", label_en: "Primary 2", label_ar: "الثاني الابتدائي" },
+        { value: "Primary 3", label_en: "Primary 3", label_ar: "الثالث الابتدائي" },
+        { value: "Primary 4", label_en: "Primary 4", label_ar: "الرابع الابتدائي" },
+        { value: "Primary 5", label_en: "Primary 5", label_ar: "الخامس الابتدائي" },
+        { value: "Primary 6", label_en: "Primary 6", label_ar: "السادس الابتدائي" },
+        { value: "Tahfeez 1", label_en: "Tahfeez 1", label_ar: "التحفيظ الأول" },
+        { value: "Tahfeez 2", label_en: "Tahfeez 2", label_ar: "التحفيظ الثاني" },
+        { value: "Tahfeez 3", label_en: "Tahfeez 3", label_ar: "التحفيظ الثالث" },
     ];
 
     return grades.map(g => ({
