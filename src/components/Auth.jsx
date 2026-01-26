@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
-import { useAuth } from "../context/AuthContext";
 
 export default function Auth() {
     const [loading, setLoading] = useState(false);
@@ -60,6 +59,14 @@ export default function Auth() {
                         <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google logo" className="mr-2" />
                         {t("signInWithGoogle")}
                     </button>
+
+                    {/* Back To Home */}
+                    <div className="text-center mt-5">
+                        <a href="/" className="inline-block px-8 py-4 rounded-full bg-gray-800 text-white text-lg font-semibold shadow-lg hover:bg-gray-900 transition-all hover:scale-105">
+                            &larr; {t("btnBackHome")}
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </div>

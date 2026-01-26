@@ -69,7 +69,7 @@ export default function TermsOfUse() {
 
                 <section>
                     <h2 className="text-2xl font-semibold text-gray-700 mb-4">{t("termsSection9Title")}</h2>
-                    <p className="text-gray-600 leading-relaxed">{t("termsSection9Content")}</p>
+                    <p className="text-gray-600 leading-relaxed">{t("termsSection9Content")} <a href="mailto:ibnluqmanalawfaaweey@gmail.com" className="text-blue-600">ibnluqmanalawfaaweey</a> </p>
                 </section>
             </div>
         </div>

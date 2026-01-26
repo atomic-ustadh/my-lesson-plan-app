@@ -4,7 +4,7 @@ export const translations = {
         appTitle: "Lesson Planner",
         signInTitle: "Sign In",
         or: "or",
-        signInWithGoogle: "Sign in with Google",
+        signInWithGoogle: "Sign Up or Sign In with Google",
         signUp: "Sign Up",
         signIn: "Sign In",
 
@@ -41,7 +41,7 @@ export const translations = {
         termsSection8Title: "8. Changes",
         termsSection8Content: "We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will provide at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.",
         termsSection9Title: "9. Contact Us",
-        termsSection9Content: "If you have any questions about these Terms, please contact us at support@lessonplanner.com.",
+        termsSection9Content: "If you have any questions about these Terms, please contact us at ",
 
         // About Page
         aboutTitle: "About Our Mission",
