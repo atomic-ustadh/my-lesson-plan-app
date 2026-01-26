@@ -1,13 +1,14 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function TermsOfUse() {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
+    const isRtl = language === 'ar';
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-gray-100 py-10 px-4 text-left">
+        <div className={`min-h-screen bg-gray-100 py-10 px-4 ${isRtl ? 'text-right' : 'text-left'}`}>
             <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md prose prose-lg">
                 <button
                     onClick={() => navigate('/')}
@@ -69,7 +70,7 @@ export default function TermsOfUse() {
 
                 <section>
                     <h2 className="text-2xl font-semibold text-gray-700 mb-4">{t("termsSection9Title")}</h2>
-                    <p className="text-gray-600 leading-relaxed">{t("termsSection9Content")} <a href="mailto:ibnluqmanalawfaaweey@gmail.com" className="text-blue-600">ibnluqmanalawfaaweey</a> </p>
+                    <p className="text-gray-600 leading-relaxed">{t("termsSection9Content")} <Link to="mailto:ibnluqmanalawfaaweey@gmail.com" className="text-blue-600">ibnluqmanalawfaaweey</Link> </p>
                 </section>
             </div>
         </div>

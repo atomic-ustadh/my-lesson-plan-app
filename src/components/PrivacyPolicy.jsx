@@ -80,7 +80,7 @@ export default function PrivacyPolicy() {
 
                 <h2 className="text-2xl font-semibold text-gray-700">{t("privacySection7Title")}</h2>
                 <p className="mb-4">
-                    {t("privacySection7Content")} <a href="mailto:ibnluqmanalawfaaweey@gmail.com" className='text-blue-600 hover:text-blue-800 font-medium'>ibnluqmanalawfaaweey@gmail.com</a>.
+                    {t("privacySection7Content")} <Link to="mailto:ibnluqmanalawfaaweey@gmail.com" className='text-blue-600 hover:text-blue-800 font-medium'>ibnluqmanalawfaaweey@gmail.com</Link>.
                 </p>
             </div>
         </div>

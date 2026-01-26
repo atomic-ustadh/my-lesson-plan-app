@@ -23,12 +23,12 @@ export default function ErrorPage({ code = "404" }) {
             <div className="text-center relative z-10 max-w-lg">
                 {/* Visual Element */}
                 <div className="mb-8">
-                    <h1 className="text-9xl font-bold text-emerald-100 select-none">
+                    <h1 className="text-9xl font-bold text-emerald-300 select-none">
                         {code}
                     </h1>
                 </div>
 
-                <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 mb-4 font-header">
+                <h2 className="text-3xl md:text-4xl text-emerald-900 mb-4">
                     {is404 ? t("err404Title") : t("err500Title")}
                 </h2>
 
