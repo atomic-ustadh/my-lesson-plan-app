@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://my-lesson-plan-app.netlify.app/sitemap.xml
